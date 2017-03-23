@@ -1,0 +1,6 @@
+framework module Pods_FlyTour {
+  umbrella header "Pods-FlyTour-umbrella.h"
+
+  export *
+  module * { export * }
+}
