@@ -8,22 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		8613DB0169394C65DD8B64A1 /* Pods_FlyTour.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0FB3BA6D8E306AA0BE682C /* Pods_FlyTour.framework */; };
-		8F6BF62B1E842BB800B466DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6BF62A1E842BB800B466DB /* AppDelegate.swift */; };
-		8F6BF62D1E842BB800B466DB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6BF62C1E842BB800B466DB /* ViewController.swift */; };
-		8F6BF6331E842BB800B466DB /* FlyTour.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F6BF6311E842BB800B466DB /* FlyTour.xcdatamodeld */; };
+		8F06C0681E843E4C0023BBAA /* FTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F06C0671E843E4C0023BBAA /* FTConstants.swift */; };
+		8F6BF62B1E842BB800B466DB /* FTAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6BF62A1E842BB800B466DB /* FTAppDelegate.swift */; };
+		8F6BF62D1E842BB800B466DB /* FTHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6BF62C1E842BB800B466DB /* FTHomeViewController.swift */; };
 		8F6BF6351E842BB800B466DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F6BF6341E842BB800B466DB /* Assets.xcassets */; };
 		8F6BF6381E842BB800B466DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F6BF6361E842BB800B466DB /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4A00F1E9D70073E802BF3E82 /* Pods-FlyTour.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlyTour.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlyTour/Pods-FlyTour.release.xcconfig"; sourceTree = "<group>"; };
+		8F06C0671E843E4C0023BBAA /* FTConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTConstants.swift; sourceTree = "<group>"; };
 		8F6BF6271E842BB800B466DB /* FlyTour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlyTour.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F6BF62A1E842BB800B466DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8F6BF62C1E842BB800B466DB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		8F6BF6321E842BB800B466DB /* FlyTour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FlyTour.xcdatamodel; sourceTree = "<group>"; };
+		8F6BF62A1E842BB800B466DB /* FTAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAppDelegate.swift; sourceTree = "<group>"; };
+		8F6BF62C1E842BB800B466DB /* FTHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTHomeViewController.swift; sourceTree = "<group>"; };
 		8F6BF6341E842BB800B466DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F6BF6371E842BB800B466DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8F6BF6391E842BB800B466DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8F6BF6391E842BB800B466DB /* FlyTour-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FlyTour-Info.plist"; sourceTree = "<group>"; };
 		AE8BAAACBB54C03330309D5C /* Pods-FlyTour.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlyTour.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlyTour/Pods-FlyTour.debug.xcconfig"; sourceTree = "<group>"; };
 		EB0FB3BA6D8E306AA0BE682C /* Pods_FlyTour.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlyTour.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -69,12 +69,12 @@
 		8F6BF6291E842BB800B466DB /* FlyTour */ = {
 			isa = PBXGroup;
 			children = (
-				8F6BF62A1E842BB800B466DB /* AppDelegate.swift */,
-				8F6BF62C1E842BB800B466DB /* ViewController.swift */,
+				8F6BF62A1E842BB800B466DB /* FTAppDelegate.swift */,
+				8F6BF62C1E842BB800B466DB /* FTHomeViewController.swift */,
 				8F6BF6341E842BB800B466DB /* Assets.xcassets */,
 				8F6BF6361E842BB800B466DB /* LaunchScreen.storyboard */,
-				8F6BF6391E842BB800B466DB /* Info.plist */,
-				8F6BF6311E842BB800B466DB /* FlyTour.xcdatamodeld */,
+				8F6BF6391E842BB800B466DB /* FlyTour-Info.plist */,
+				8F06C0671E843E4C0023BBAA /* FTConstants.swift */,
 			);
 			path = FlyTour;
 			sourceTree = "<group>";
@@ -123,7 +123,7 @@
 				TargetAttributes = {
 					8F6BF6261E842BB800B466DB = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 446Z335HU6;
+						DevelopmentTeam = RCYN23FXZR;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -211,9 +211,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F6BF62D1E842BB800B466DB /* ViewController.swift in Sources */,
-				8F6BF6331E842BB800B466DB /* FlyTour.xcdatamodeld in Sources */,
-				8F6BF62B1E842BB800B466DB /* AppDelegate.swift in Sources */,
+				8F6BF62D1E842BB800B466DB /* FTHomeViewController.swift in Sources */,
+				8F6BF62B1E842BB800B466DB /* FTAppDelegate.swift in Sources */,
+				8F06C0681E843E4C0023BBAA /* FTConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,11 +329,11 @@
 			baseConfigurationReference = AE8BAAACBB54C03330309D5C /* Pods-FlyTour.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 446Z335HU6;
-				INFOPLIST_FILE = FlyTour/Info.plist;
+				DEVELOPMENT_TEAM = RCYN23FXZR;
+				INFOPLIST_FILE = "$(SRCROOT)/FlyTour/FlyTour-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flyhomes.FlyTour;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flytour.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -344,11 +344,11 @@
 			baseConfigurationReference = 4A00F1E9D70073E802BF3E82 /* Pods-FlyTour.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 446Z335HU6;
-				INFOPLIST_FILE = FlyTour/Info.plist;
+				DEVELOPMENT_TEAM = RCYN23FXZR;
+				INFOPLIST_FILE = "$(SRCROOT)/FlyTour/FlyTour-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flyhomes.FlyTour;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flytour.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -376,19 +376,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		8F6BF6311E842BB800B466DB /* FlyTour.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				8F6BF6321E842BB800B466DB /* FlyTour.xcdatamodel */,
-			);
-			currentVersion = 8F6BF6321E842BB800B466DB /* FlyTour.xcdatamodel */;
-			path = FlyTour.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 8F6BF61F1E842BB800B466DB /* Project object */;
 }

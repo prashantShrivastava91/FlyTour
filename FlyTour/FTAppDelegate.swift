@@ -7,16 +7,22 @@
 //
 
 import UIKit
-import CoreData
+import GoogleMaps
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class FTAppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        GMSServices.provideAPIKey(Constants.MAPS_API_KEY);
+        
+        let home = HomeViewController();
+        let navController = UINavigationController(rootViewController: home);
+        window = UIWindow(frame: UIScreen.main.bounds);
+        window?.rootViewController = navController;
+        window?.makeKeyAndVisible();
         return true
     }
 
