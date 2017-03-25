@@ -7,6 +7,7 @@ target 'FlyTour' do
     pod 'GoogleMaps'
     pod 'GooglePlaces'
     pod 'Alamofire', '~> 4.4'
+    pod 'ObjectMapper', '~> 2.2'
 end
 
 post_install do |installer|
