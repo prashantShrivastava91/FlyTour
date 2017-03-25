@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleMaps
+import GooglePlaces
 
 @UIApplicationMain
 class FTAppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,10 +17,10 @@ class FTAppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        GMSServices.provideAPIKey(Constants.MAPS_API_KEY);
+        GMSServices.provideAPIKey(Constants.MAPS_API_KEY)
+        GMSPlacesClient.provideAPIKey(Constants.MAPS_API_KEY)
         
-        let home = HomeViewController();
-        let navController = UINavigationController(rootViewController: home);
+        let navController = UINavigationController(rootViewController: FTHomeViewController())
         window = UIWindow(frame: UIScreen.main.bounds);
         window?.rootViewController = navController;
         window?.makeKeyAndVisible();
