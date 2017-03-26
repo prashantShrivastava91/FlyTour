@@ -23,7 +23,6 @@
 		8FA28D811E87BC30007F1359 /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA28D801E87BC30007F1359 /* String+Additions.swift */; };
 		8FA28D831E87DF42007F1359 /* FTRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA28D821E87DF42007F1359 /* FTRoute.swift */; };
 		8FC6881D1E85AAD5002A8C46 /* FTCommonFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC6881C1E85AAD5002A8C46 /* FTCommonFunctions.swift */; };
-		8FC688221E85B0F8002A8C46 /* Georgia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8FC688201E85B0F8002A8C46 /* Georgia.ttf */; };
 		8FC688241E85C6FA002A8C46 /* FTNewTourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC688231E85C6FA002A8C46 /* FTNewTourViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,7 +45,6 @@
 		8FA28D801E87BC30007F1359 /* String+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Additions.swift"; sourceTree = "<group>"; };
 		8FA28D821E87DF42007F1359 /* FTRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTRoute.swift; sourceTree = "<group>"; };
 		8FC6881C1E85AAD5002A8C46 /* FTCommonFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCommonFunctions.swift; sourceTree = "<group>"; };
-		8FC688201E85B0F8002A8C46 /* Georgia.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Georgia.ttf; sourceTree = "<group>"; };
 		8FC688231E85C6FA002A8C46 /* FTNewTourViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNewTourViewController.swift; sourceTree = "<group>"; };
 		AE8BAAACBB54C03330309D5C /* Pods-FlyTour.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlyTour.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlyTour/Pods-FlyTour.debug.xcconfig"; sourceTree = "<group>"; };
 		EB0FB3BA6D8E306AA0BE682C /* Pods_FlyTour.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlyTour.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,19 +91,15 @@
 		8F6BF6291E842BB800B466DB /* FlyTour */ = {
 			isa = PBXGroup;
 			children = (
+				8FA28D881E880DA9007F1359 /* Supporting Files */,
+				8FA28D871E880D89007F1359 /* Cells */,
+				8FA28D861E880D72007F1359 /* Categories */,
+				8FA28D851E880D64007F1359 /* Utils */,
+				8FA28D841E880D4F007F1359 /* Controllers */,
 				8FA28D731E869AC1007F1359 /* Models */,
-				8FC6881E1E85B0D9002A8C46 /* Resources */,
 				8F6BF62A1E842BB800B466DB /* FTAppDelegate.swift */,
-				8F6BF62C1E842BB800B466DB /* FTHomeViewController.swift */,
 				8F6BF6341E842BB800B466DB /* Assets.xcassets */,
 				8F6BF6361E842BB800B466DB /* LaunchScreen.storyboard */,
-				8F6BF6391E842BB800B466DB /* FlyTour-Info.plist */,
-				8F06C0671E843E4C0023BBAA /* FTConstants.swift */,
-				8FC6881C1E85AAD5002A8C46 /* FTCommonFunctions.swift */,
-				8FC688231E85C6FA002A8C46 /* FTNewTourViewController.swift */,
-				8FA28D7C1E874C40007F1359 /* FTRouteDetailCell.swift */,
-				8FA28D7E1E87B42D007F1359 /* UILabel+Additions.swift */,
-				8FA28D801E87BC30007F1359 /* String+Additions.swift */,
 			);
 			path = FlyTour;
 			sourceTree = "<group>";
@@ -122,13 +116,48 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		8FC6881E1E85B0D9002A8C46 /* Resources */ = {
+		8FA28D841E880D4F007F1359 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				8F55028A1E85D86E00E84C62 /* icomoon.ttf */,
-				8FC688201E85B0F8002A8C46 /* Georgia.ttf */,
+				8F6BF62C1E842BB800B466DB /* FTHomeViewController.swift */,
+				8FC688231E85C6FA002A8C46 /* FTNewTourViewController.swift */,
 			);
-			name = Resources;
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		8FA28D851E880D64007F1359 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8F06C0671E843E4C0023BBAA /* FTConstants.swift */,
+				8FC6881C1E85AAD5002A8C46 /* FTCommonFunctions.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		8FA28D861E880D72007F1359 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				8FA28D7E1E87B42D007F1359 /* UILabel+Additions.swift */,
+				8FA28D801E87BC30007F1359 /* String+Additions.swift */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		8FA28D871E880D89007F1359 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8FA28D7C1E874C40007F1359 /* FTRouteDetailCell.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		8FA28D881E880DA9007F1359 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8F6BF6391E842BB800B466DB /* FlyTour-Info.plist */,
+				8F55028A1E85D86E00E84C62 /* icomoon.ttf */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		F1D98D51AB065FEF566DB306 /* Pods */ = {
@@ -204,7 +233,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F6BF6381E842BB800B466DB /* LaunchScreen.storyboard in Resources */,
-				8FC688221E85B0F8002A8C46 /* Georgia.ttf in Resources */,
 				8F6BF6351E842BB800B466DB /* Assets.xcassets in Resources */,
 				8F55028B1E85D86E00E84C62 /* icomoon.ttf in Resources */,
 			);
