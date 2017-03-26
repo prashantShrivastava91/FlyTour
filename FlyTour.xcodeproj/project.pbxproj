@@ -14,6 +14,14 @@
 		8F6BF62D1E842BB800B466DB /* FTHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6BF62C1E842BB800B466DB /* FTHomeViewController.swift */; };
 		8F6BF6351E842BB800B466DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F6BF6341E842BB800B466DB /* Assets.xcassets */; };
 		8F6BF6381E842BB800B466DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F6BF6361E842BB800B466DB /* LaunchScreen.storyboard */; };
+		8FA28D751E869B25007F1359 /* FTRoutesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA28D741E869B25007F1359 /* FTRoutesResponse.swift */; };
+		8FA28D771E86B204007F1359 /* FTGeocodedWaypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA28D761E86B204007F1359 /* FTGeocodedWaypoint.swift */; };
+		8FA28D791E86B444007F1359 /* FTRouteLeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA28D781E86B444007F1359 /* FTRouteLeg.swift */; };
+		8FA28D7B1E86B47A007F1359 /* FTGenericTextValueData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA28D7A1E86B47A007F1359 /* FTGenericTextValueData.swift */; };
+		8FA28D7D1E874C40007F1359 /* FTRouteDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA28D7C1E874C40007F1359 /* FTRouteDetailCell.swift */; };
+		8FA28D7F1E87B42D007F1359 /* UILabel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA28D7E1E87B42D007F1359 /* UILabel+Additions.swift */; };
+		8FA28D811E87BC30007F1359 /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA28D801E87BC30007F1359 /* String+Additions.swift */; };
+		8FA28D831E87DF42007F1359 /* FTRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA28D821E87DF42007F1359 /* FTRoute.swift */; };
 		8FC6881D1E85AAD5002A8C46 /* FTCommonFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC6881C1E85AAD5002A8C46 /* FTCommonFunctions.swift */; };
 		8FC688221E85B0F8002A8C46 /* Georgia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8FC688201E85B0F8002A8C46 /* Georgia.ttf */; };
 		8FC688241E85C6FA002A8C46 /* FTNewTourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC688231E85C6FA002A8C46 /* FTNewTourViewController.swift */; };
@@ -29,6 +37,14 @@
 		8F6BF6341E842BB800B466DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F6BF6371E842BB800B466DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F6BF6391E842BB800B466DB /* FlyTour-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FlyTour-Info.plist"; sourceTree = "<group>"; };
+		8FA28D741E869B25007F1359 /* FTRoutesResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTRoutesResponse.swift; sourceTree = "<group>"; };
+		8FA28D761E86B204007F1359 /* FTGeocodedWaypoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTGeocodedWaypoint.swift; sourceTree = "<group>"; };
+		8FA28D781E86B444007F1359 /* FTRouteLeg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTRouteLeg.swift; sourceTree = "<group>"; };
+		8FA28D7A1E86B47A007F1359 /* FTGenericTextValueData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTGenericTextValueData.swift; sourceTree = "<group>"; };
+		8FA28D7C1E874C40007F1359 /* FTRouteDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTRouteDetailCell.swift; sourceTree = "<group>"; };
+		8FA28D7E1E87B42D007F1359 /* UILabel+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Additions.swift"; sourceTree = "<group>"; };
+		8FA28D801E87BC30007F1359 /* String+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Additions.swift"; sourceTree = "<group>"; };
+		8FA28D821E87DF42007F1359 /* FTRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTRoute.swift; sourceTree = "<group>"; };
 		8FC6881C1E85AAD5002A8C46 /* FTCommonFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCommonFunctions.swift; sourceTree = "<group>"; };
 		8FC688201E85B0F8002A8C46 /* Georgia.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Georgia.ttf; sourceTree = "<group>"; };
 		8FC688231E85C6FA002A8C46 /* FTNewTourViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNewTourViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +93,7 @@
 		8F6BF6291E842BB800B466DB /* FlyTour */ = {
 			isa = PBXGroup;
 			children = (
+				8FA28D731E869AC1007F1359 /* Models */,
 				8FC6881E1E85B0D9002A8C46 /* Resources */,
 				8F6BF62A1E842BB800B466DB /* FTAppDelegate.swift */,
 				8F6BF62C1E842BB800B466DB /* FTHomeViewController.swift */,
@@ -86,8 +103,23 @@
 				8F06C0671E843E4C0023BBAA /* FTConstants.swift */,
 				8FC6881C1E85AAD5002A8C46 /* FTCommonFunctions.swift */,
 				8FC688231E85C6FA002A8C46 /* FTNewTourViewController.swift */,
+				8FA28D7C1E874C40007F1359 /* FTRouteDetailCell.swift */,
+				8FA28D7E1E87B42D007F1359 /* UILabel+Additions.swift */,
+				8FA28D801E87BC30007F1359 /* String+Additions.swift */,
 			);
 			path = FlyTour;
+			sourceTree = "<group>";
+		};
+		8FA28D731E869AC1007F1359 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8FA28D741E869B25007F1359 /* FTRoutesResponse.swift */,
+				8FA28D761E86B204007F1359 /* FTGeocodedWaypoint.swift */,
+				8FA28D781E86B444007F1359 /* FTRouteLeg.swift */,
+				8FA28D7A1E86B47A007F1359 /* FTGenericTextValueData.swift */,
+				8FA28D821E87DF42007F1359 /* FTRoute.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		8FC6881E1E85B0D9002A8C46 /* Resources */ = {
@@ -233,10 +265,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FA28D791E86B444007F1359 /* FTRouteLeg.swift in Sources */,
+				8FA28D751E869B25007F1359 /* FTRoutesResponse.swift in Sources */,
+				8FA28D7F1E87B42D007F1359 /* UILabel+Additions.swift in Sources */,
 				8FC688241E85C6FA002A8C46 /* FTNewTourViewController.swift in Sources */,
+				8FA28D7B1E86B47A007F1359 /* FTGenericTextValueData.swift in Sources */,
+				8FA28D771E86B204007F1359 /* FTGeocodedWaypoint.swift in Sources */,
 				8F6BF62D1E842BB800B466DB /* FTHomeViewController.swift in Sources */,
 				8F6BF62B1E842BB800B466DB /* FTAppDelegate.swift in Sources */,
 				8FC6881D1E85AAD5002A8C46 /* FTCommonFunctions.swift in Sources */,
+				8FA28D811E87BC30007F1359 /* String+Additions.swift in Sources */,
+				8FA28D7D1E874C40007F1359 /* FTRouteDetailCell.swift in Sources */,
+				8FA28D831E87DF42007F1359 /* FTRoute.swift in Sources */,
 				8F06C0681E843E4C0023BBAA /* FTConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
