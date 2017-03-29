@@ -8,6 +8,7 @@
 
 import UIKit
 import ObjectMapper
+import ReachabilitySwift
 
 class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FTNewTourViewControllerDelegate, FTNoInternetViewDelegate {
 
@@ -17,6 +18,8 @@ class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDa
     static let kButtonCornerRadius: CGFloat = 4.0
     static let kCreateTourText: String = "Create a new tour"
     static let kPageTitle: String = "MY TOURS";
+    static let kActiveConnectionText: String = "Internet connection active"
+    static let kNoConnectionText: String = "No internet connection"
     
     var tableview: UITableView!
     var indicatorView: UIActivityIndicatorView!
@@ -24,6 +27,7 @@ class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var noInternetView: FTNoInternetView!
     
     var tours = [FTTour]()
+    let reachability = Reachability()!
     
     //MARK: - lifecycle methods
     
@@ -44,6 +48,22 @@ class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         p_addNewTourButton()
         p_addNoInternetView()
         p_getTours()
+        
+        do {
+            try reachability.startNotifier()
+        } catch {
+        }
+        
+        reachability.whenReachable = { reachability in
+            DispatchQueue.main.async {
+                FTCommonFunctions.showOverlayBannerWith(text: FTHomeViewController.kActiveConnectionText, textColor: .white, backgroundColor: UIColor.black.withAlphaComponent(0.8))
+            }
+        }
+        reachability.whenUnreachable = { reachability in
+            DispatchQueue.main.async {
+                FTCommonFunctions.showOverlayBannerWith(text: FTHomeViewController.kNoConnectionText, textColor: .white, backgroundColor: UIColor.black.withAlphaComponent(0.8))
+            }
+        }
     }
     
     override func viewWillLayoutSubviews() {
