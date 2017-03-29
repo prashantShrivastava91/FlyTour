@@ -9,7 +9,7 @@
 import UIKit
 import ObjectMapper
 
-class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FTNewTourViewControllerDelegate {
+class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FTNewTourViewControllerDelegate, FTNoInternetViewDelegate {
 
     static let kButtonHeight: CGFloat = 40.0
     static let kButtonFont: CGFloat = 16.0
@@ -21,6 +21,7 @@ class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var tableview: UITableView!
     var indicatorView: UIActivityIndicatorView!
     var newTourButton: UIButton!
+    var noInternetView: FTNoInternetView!
     
     var tours = [FTTour]()
     
@@ -41,6 +42,7 @@ class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         p_addTableview()
         p_addIndicatorView()
         p_addNewTourButton()
+        p_addNoInternetView()
         p_getTours()
     }
     
@@ -50,7 +52,14 @@ class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let viewSize = view.frame.size
         newTourButton.frame = CGRect(x: FTHomeViewController.kButtonPadding, y: viewSize.height - FTHomeViewController.kButtonPadding - FTHomeViewController.kButtonHeight, width: (viewSize.width - 2 * FTHomeViewController.kButtonPadding), height: FTHomeViewController.kButtonHeight)
         tableview.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height - 2 * FTHomeViewController.kButtonPadding - FTHomeViewController.kButtonHeight)
+        noInternetView.frame = tableview.frame
         indicatorView.center = CGPoint(x: tableview.bounds.size.width/2, y: tableview.bounds.size.height/2)
+    }
+    
+    //MARK: - FTNoInternetViewDelegate methods
+    
+    func noInternetViewRetryClicked(noInternetView: FTNoInternetView) {
+        p_getTours()
     }
     
     //MARK: - UITableViewDelegate methods
@@ -100,6 +109,7 @@ class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         indicatorView.startAnimating()
         FTNetworkManager.sharedInstance.getObjectWith(urlPath: Constants.BASE_URL.appending(Apis.GET_TOURS), params: nil, success: { [weak self] (response) in
             self?.indicatorView.stopAnimating()
+            self?.noInternetView.alpha = 0
             if let JSON = response {
                 let toursResponse = Mapper<FTToursResponse>().map(JSONObject: JSON)
                 if let toursArray = toursResponse?.tours {
@@ -109,6 +119,7 @@ class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }) { [weak self] (error) in
             self?.indicatorView.stopAnimating()
+            self?.noInternetView.alpha = 1
         }
     }
     
@@ -139,6 +150,13 @@ class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         newTourButton.layer.cornerRadius = FTHomeViewController.kButtonCornerRadius
         newTourButton.layer.masksToBounds = true
         view.addSubview(newTourButton)
+    }
+    
+    func p_addNoInternetView() {
+        noInternetView = FTNoInternetView(frame: .zero)
+        noInternetView.delegate = self
+        noInternetView.alpha = 0
+        view.addSubview(noInternetView)
     }
     
 }

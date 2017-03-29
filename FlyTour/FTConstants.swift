@@ -29,6 +29,7 @@ struct Icons {
     static let VERTICAL_DOTS_ICON = String.init("\u{e6e5}")
     static let CROSS_ICON = String.init("\u{e936}")
     static let WAYPOINTS_ICON = String.init("\u{e973}")
+    static let RELOAD_ICON = String.init("\u{e726}")
 }
 
 struct Colors {

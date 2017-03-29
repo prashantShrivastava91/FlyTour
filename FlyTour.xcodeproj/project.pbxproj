@@ -29,6 +29,7 @@
 		8FC6881D1E85AAD5002A8C46 /* FTCommonFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC6881C1E85AAD5002A8C46 /* FTCommonFunctions.swift */; };
 		8FC688241E85C6FA002A8C46 /* FTNewTourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC688231E85C6FA002A8C46 /* FTNewTourViewController.swift */; };
 		8FCB48CF1E8C544D00240FB5 /* FTNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCB48CE1E8C544D00240FB5 /* FTNetworkManager.swift */; };
+		8FCB48D11E8C690B00240FB5 /* FTNoInternetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCB48D01E8C690B00240FB5 /* FTNoInternetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		8FC6881C1E85AAD5002A8C46 /* FTCommonFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCommonFunctions.swift; sourceTree = "<group>"; };
 		8FC688231E85C6FA002A8C46 /* FTNewTourViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNewTourViewController.swift; sourceTree = "<group>"; };
 		8FCB48CE1E8C544D00240FB5 /* FTNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNetworkManager.swift; sourceTree = "<group>"; };
+		8FCB48D01E8C690B00240FB5 /* FTNoInternetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNoInternetView.swift; sourceTree = "<group>"; };
 		AE8BAAACBB54C03330309D5C /* Pods-FlyTour.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlyTour.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlyTour/Pods-FlyTour.debug.xcconfig"; sourceTree = "<group>"; };
 		EB0FB3BA6D8E306AA0BE682C /* Pods_FlyTour.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlyTour.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -101,6 +103,7 @@
 		8F6BF6291E842BB800B466DB /* FlyTour */ = {
 			isa = PBXGroup;
 			children = (
+				8FCB48D21E8C733D00240FB5 /* Views */,
 				8FA28D881E880DA9007F1359 /* Supporting Files */,
 				8FA28D871E880D89007F1359 /* Cells */,
 				8FA28D861E880D72007F1359 /* Categories */,
@@ -173,6 +176,14 @@
 				8F55028A1E85D86E00E84C62 /* icomoon.ttf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8FCB48D21E8C733D00240FB5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8FCB48D01E8C690B00240FB5 /* FTNoInternetView.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		F1D98D51AB065FEF566DB306 /* Pods */ = {
@@ -319,6 +330,7 @@
 				8FA28D7B1E86B47A007F1359 /* FTGenericTextValueData.swift in Sources */,
 				8FA28D771E86B204007F1359 /* FTGeocodedWaypoint.swift in Sources */,
 				8F8077041E8A926700AF1D2A /* FTToursResponse.swift in Sources */,
+				8FCB48D11E8C690B00240FB5 /* FTNoInternetView.swift in Sources */,
 				8F6BF62B1E842BB800B466DB /* FTAppDelegate.swift in Sources */,
 				8FC6881D1E85AAD5002A8C46 /* FTCommonFunctions.swift in Sources */,
 				8FA28D811E87BC30007F1359 /* String+Additions.swift in Sources */,
