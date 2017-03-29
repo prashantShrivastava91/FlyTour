@@ -30,6 +30,12 @@ class FTRouteDetailCell: UITableViewCell {
     var lineview: UIView!
     var distanceTimeLabal: UILabel!
     
+    //MARK: - lifecycle methods
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -61,6 +67,8 @@ class FTRouteDetailCell: UITableViewCell {
         }
     }
     
+    //MARK: - public methods
+    
     func updateCellWith(place: FTPlace) {
         var iconText: String?
         switch place.placeType {
@@ -91,10 +99,6 @@ class FTRouteDetailCell: UITableViewCell {
         }
         height += kCellVerticalPadding
         return height
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
 }

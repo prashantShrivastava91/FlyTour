@@ -170,11 +170,11 @@ class FTTourDetailCell: UITableViewCell {
     
     //MARK: - private methods
     
-    static func p_getWaypointsText(count: Int) -> String {
+    private static func p_getWaypointsText(count: Int) -> String {
         return "via \(count) waypoints"
     }
     
-    static func p_getDistanceDurationText(distance: Double, duration: Double) -> NSAttributedString {
+    private static func p_getDistanceDurationText(distance: Double, duration: Double) -> NSAttributedString {
         let distanceString = FTCommonFunctions.getDistanceStringFor(totalDistance: distance)
         let timeString = "(" + FTCommonFunctions.getTimeStringFor(totalSeconds: duration) + ")"
         let totalString = "\(distanceString)\n\(timeString)"
@@ -185,14 +185,14 @@ class FTTourDetailCell: UITableViewCell {
         return attributedString.copy() as! NSAttributedString
     }
     
-    static func p_getDateString(time: Double) -> String {
+    private static func p_getDateString(time: Double) -> String {
         let date = Date(timeIntervalSince1970: time)
         let formatter = DateFormatter()
         formatter.dateFormat = FTTourDetailCell.kTimeFormat
         return formatter.string(from: date)
     }
     
-    func p_initSubviews() {
+    private func p_initSubviews() {
         baseContainerView = UIView()
         baseContainerView.backgroundColor = .white
         addSubview(baseContainerView)

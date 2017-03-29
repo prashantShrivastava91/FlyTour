@@ -231,7 +231,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
     
     //MARK: - private methods
     
-    func p_showLocationAlert() {
+    private func p_showLocationAlert() {
         let alertController = UIAlertController(title: kLocationAlertTitle, message: kLocationAlertMessage, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         let settingsAction = UIAlertAction(title: "Open Settings", style: .default, handler: { (action) in
@@ -242,7 +242,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         present(alertController, animated: true, completion: nil)
     }
     
-    func p_checkLocation() {
+    @objc private func p_checkLocation() {
         if CLLocationManager.locationServicesEnabled() {
             switch(CLLocationManager.authorizationStatus()) {
             case .notDetermined:
@@ -267,11 +267,11 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    func p_closeView() {
+    @objc private func p_closeView() {
         dismiss(animated: true, completion: nil)
     }
     
-    func p_addRouteDetailTableview() {
+    private func p_addRouteDetailTableview() {
         routeDetailTableview = UITableView(frame: CGRect(x: 0, y: kRouteDetailViewHeight, width: Constants.SCREEN_WIDTH, height: 0))
         routeDetailTableview.tableFooterView = UIView()
         routeDetailTableview.dataSource = self
@@ -281,13 +281,13 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         routeDetailView.addSubview(routeDetailTableview)
     }
     
-    func p_addRouteDetailLabel() {
+    private func p_addRouteDetailLabel() {
         routeDetailLabel = UILabel()
         routeDetailLabel.numberOfLines = 0
         routeDetailView.addSubview(routeDetailLabel)
     }
     
-    func p_addAddressLabel() {
+    private func p_addAddressLabel() {
         addAddressLabel = UILabel.labelWith(font: UIFont(name: Constants.APP_FONT_NAME, size: kTertiaryFont)!, textColor: Colors.APP_COLOR, backgroundColor: .clear, multipleLines: false)
         addAddressLabel.textAlignment = .center
         addAddressLabel.numberOfLines = 2
@@ -295,7 +295,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         routeDetailView.addSubview(addAddressLabel)
     }
     
-    func p_addAddressIcon() {
+    private func p_addAddressIcon() {
         let textSize = addAddressLabel.text!.suggestedSizeWith(font: addAddressLabel.font, size: CGSize(width: Constants.SCREEN_WIDTH, height: CGFloat.greatestFiniteMagnitude), lineBreakMode: .byWordWrapping)
         addAddressIcon = UILabel(frame: CGRect(x: Constants.SCREEN_WIDTH - kAddAddressLabelPadding - textSize.width/2 - kAddAddressIconDimension/2, y: Constants.SCREEN_HEIGHT, width: kAddAddressIconDimension, height: kAddAddressIconDimension))
         addAddressIcon.backgroundColor = Colors.APP_COLOR
@@ -312,13 +312,13 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         addAddressIcon.addGestureRecognizer(openAutoCompletGesture)
     }
     
-    func p_addIndicatorView() {
+    private func p_addIndicatorView() {
         activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         activityIndicatorView.hidesWhenStopped = true
         view.addSubview(activityIndicatorView)
     }
     
-    func p_addRouteDetailView() {
+    private func p_addRouteDetailView() {
         routeDetailView = UIView(frame: CGRect(x: 0, y: Constants.SCREEN_HEIGHT + kAddAddressIconDimension/2, width: Constants.SCREEN_WIDTH, height: kRouteDetailViewHeight))
         routeDetailView.backgroundColor = UIColor.white
         view.addSubview(routeDetailView)
@@ -331,12 +331,12 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         p_addRouteDetailTableview()
     }
     
-    func p_addMapview() {
+    private func p_addMapview() {
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: GMSCameraPosition.camera(withLatitude: kDefaultLatitude, longitude: kDefaultLongitude, zoom: kDefaultZoomFactor));
         view.addSubview(mapView);
     }
     
-    func p_addDestinationTextfield() {
+    private func p_addDestinationTextfield() {
         destinationTextfield = UITextField()
         destinationIconLabel.isEnabled = false
         destinationTextfield.backgroundColor = UIColor.gray.withAlphaComponent(0.2)
@@ -351,7 +351,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         navigationBottomBarView.addSubview(destinationTextfield)
     }
     
-    func p_addDestinationIcon() {
+    private func p_addDestinationIcon() {
         destinationIconLabel = UILabel()
         destinationIconLabel.font = UIFont(name: Constants.ICON_FONT_NAME, size: kIconDimension)
         destinationIconLabel.textColor = UIColor.white
@@ -360,7 +360,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         navigationBottomBarView.addSubview(destinationIconLabel)
     }
     
-    func p_addDotIcon() {
+    private func p_addDotIcon() {
         dotsIconLabel = UILabel()
         dotsIconLabel.font = UIFont(name: Constants.ICON_FONT_NAME, size: kIconDimension)
         dotsIconLabel.textColor = UIColor.white
@@ -369,7 +369,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         navigationBottomBarView.addSubview(dotsIconLabel)
     }
     
-    func p_addSourceTextfield() {
+    private func p_addSourceTextfield() {
         sourceTextfield = UITextField()
         sourceTextfield.backgroundColor = UIColor.white.withAlphaComponent(0.2)
         sourceTextfield.textColor = UIColor.white
@@ -383,7 +383,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         navigationBottomBarView.addSubview(sourceTextfield)
     }
     
-    func p_addSourceIcon() {
+    private func p_addSourceIcon() {
         sourceIconLabel = UILabel()
         sourceIconLabel.font = UIFont(name: Constants.ICON_FONT_NAME, size: kIconDimension)
         sourceIconLabel.textColor = UIColor.white
@@ -391,13 +391,13 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         navigationBottomBarView.addSubview(sourceIconLabel)
     }
     
-    func p_addTitleLabel() {
+    private func p_addTitleLabel() {
         titleLabel = UILabel.labelWith(font: UIFont(name: Constants.APP_FONT_MEDIUM, size: kPrimaryFont)!, textColor: .white, backgroundColor: .clear, multipleLines: false)
         titleLabel.text = kPageTitle
         navigationView.addSubview(titleLabel)
     }
     
-    func p_addCrossIcon() {
+    private func p_addCrossIcon() {
         crossIcon = UILabel.labelWith(font: UIFont(name: Constants.ICON_FONT_NAME, size: kPrimaryFont)!, textColor: .white, backgroundColor: .clear, multipleLines: false)
         crossIcon.text = Icons.CROSS_ICON
         crossIcon.isUserInteractionEnabled = true
@@ -408,7 +408,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         crossIcon.addGestureRecognizer(closeGesture)
     }
     
-    func p_addSaveLabel() {
+    private func p_addSaveLabel() {
         saveButton = UIButton(type: .custom)
         saveButton.setTitle(kSaveText, for: .normal)
         saveButton.titleLabel?.font = UIFont(name: Constants.APP_FONT_MEDIUM, size: kSecondaryFont)!
@@ -418,7 +418,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         navigationView.addSubview(saveButton)
     }
     
-    func p_addNavigationBottomBarView() {
+    private func p_addNavigationBottomBarView() {
         navigationBottomBarView = UIView()
         navigationBottomBarView.backgroundColor = Colors.APP_COLOR
         view.addSubview(navigationBottomBarView)
@@ -430,7 +430,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         p_addDestinationTextfield()
     }
     
-    func p_addNavigationView() {
+    private func p_addNavigationView() {
         navigationView = UIView()
         navigationView.backgroundColor = Colors.APP_COLOR
         view.addSubview(navigationView)
@@ -440,7 +440,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         p_addSaveLabel()
     }
     
-    func p_saveTapped() {
+    @objc private func p_saveTapped() {
         let tourModel = FTTour()
         tourModel.source = sourcePlaceModel
         tourModel.destination = destinationPlaceModel
@@ -472,7 +472,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    func p_handlePan(_ sender: UIPanGestureRecognizer) {
+    @objc private func p_handlePan(_ sender: UIPanGestureRecognizer) {
         let point = sender.translation(in: sender.view)
         var frame: CGRect = sender.view!.frame
         switch sender.state {
@@ -500,18 +500,18 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    func p_addWaypointTapped() {
+    @objc private func p_addWaypointTapped() {
         routeType = .Waypoint
         p_showAutoCompleteView()
     }
     
-    func p_showAutoCompleteView() {
+    private func p_showAutoCompleteView() {
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
         present(autocompleteController, animated: true, completion: nil)
     }
     
-    func p_getAttributedTextWith(distance: Double, duration: Double, summary: String?) -> NSAttributedString {
+    private func p_getAttributedTextWith(distance: Double, duration: Double, summary: String?) -> NSAttributedString {
         let distanceText = "\(FTCommonFunctions.getDistanceStringFor(totalDistance: distance))"
         let timeText = "(\(FTCommonFunctions.getTimeStringFor(totalSeconds: duration)))"
         var summaryText = ""
@@ -530,7 +530,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         return attributedText.copy() as! NSAttributedString
     }
     
-    func p_updateView() {
+    private func p_updateView() {
         if let response = routeResponse {
             if (response.routes != nil && response.routes!.count > 0) {
                 if (response.routes![0].legs != nil && response.routes![0].legs!.count > 0) {
@@ -585,7 +585,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         saveButton.isEnabled = true
     }
     
-    func p_reorderWaypoints() {
+    private func p_reorderWaypoints() {
         routeDetailArray.removeAll()
         
         if let sourceModel = sourcePlaceModel, let destinationModel = destinationPlaceModel {
@@ -606,7 +606,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    func p_getPath() {
+    private func p_getPath() {
         if let sourceModel = sourcePlaceModel, let destinationModel = destinationPlaceModel {
             let sourceCordinate = CLLocationCoordinate2D(latitude: sourceModel.latitude!, longitude: sourceModel.longitude!)
             let destinationCordinate = CLLocationCoordinate2D(latitude: destinationModel.latitude!, longitude: destinationModel.longitude!)
@@ -638,7 +638,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    func p_addPlaceModel(placeModel: FTPlace) {
+    private func p_addPlaceModel(placeModel: FTPlace) {
         let placePosition = CLLocationCoordinate2D(latitude: placeModel.latitude!, longitude: placeModel.longitude!)
         let marker = GMSMarker(position: placePosition)
         marker.title = placeModel.name

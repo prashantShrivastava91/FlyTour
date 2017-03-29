@@ -87,14 +87,14 @@ class FTTourDetailViewController: UIViewController, UITableViewDataSource, UITab
     
     //MARK: - private methods
     
-    func p_placeMarker(position: CLLocationCoordinate2D, name: String?) {
+    private func p_placeMarker(position: CLLocationCoordinate2D, name: String?) {
         let marker = GMSMarker(position: position)
         marker.title = name
         marker.appearAnimation = GMSMarkerAnimation.pop
         marker.map = mapview
     }
     
-    func p_populateData() {
+    private func p_populateData() {
         bounds = GMSCoordinateBounds()
         places = [FTPlace]()
         
@@ -139,12 +139,12 @@ class FTTourDetailViewController: UIViewController, UITableViewDataSource, UITab
         placesTableview.reloadData()
     }
     
-    func p_addMapview() {
+    private func p_addMapview() {
         mapview = GMSMapView(frame: .zero)
         view.addSubview(mapview)
     }
 
-    func p_addDetailView() {
+    private func p_addDetailView() {
         detailView = UIView()
         detailView.backgroundColor = .white
         view.addSubview(detailView)
@@ -154,19 +154,19 @@ class FTTourDetailViewController: UIViewController, UITableViewDataSource, UITab
         p_addTableview()
     }
     
-    func p_addDetailLabel() {
+    private func p_addDetailLabel() {
         detailLabel = UILabel()
         detailLabel.numberOfLines = 0
         detailView.addSubview(detailLabel)
     }
     
-    func p_addLineview() {
+    private func p_addLineview() {
         lineview = UIView()
         lineview.backgroundColor = Colors.GREY_E0E0E0
         detailView.addSubview(lineview)
     }
     
-    func p_addTableview() {
+    private func p_addTableview() {
         placesTableview = UITableView()
         placesTableview.tableFooterView = UIView()
         placesTableview.dataSource = self

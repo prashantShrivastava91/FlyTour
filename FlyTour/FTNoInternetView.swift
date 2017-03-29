@@ -55,26 +55,26 @@ class FTNoInternetView: UIView {
     
     //MARK: - private methods
     
-    func p_handleRetryTap() {
+    @objc private func p_handleRetryTap() {
         if delegate != nil {
             delegate?.noInternetViewRetryClicked(noInternetView: self)
         }
     }
     
-    func p_addImageview() {
+    private func p_addImageview() {
         imageview = UIImageView(image: UIImage(imageLiteralResourceName: "no_internet"))
         imageview.contentMode = .scaleAspectFit
         addSubview(imageview)
     }
     
-    func p_addNoInternetLabel() {
+    private func p_addNoInternetLabel() {
         noInternetLabel = UILabel.labelWith(font: UIFont(name: Constants.APP_FONT_NAME, size: kSecondaryFont)!, textColor: .black, backgroundColor: .clear, multipleLines: true)
         noInternetLabel.textAlignment = .center
         noInternetLabel.text = kNoInternetText
         addSubview(noInternetLabel)
     }
     
-    func p_addRetryLabel() {
+    private func p_addRetryLabel() {
         let iconText = Icons.RELOAD_ICON!
         let finalText = iconText.appending(kRetryText)
         let attributedText: NSMutableAttributedString = NSMutableAttributedString(string: finalText, attributes: [NSForegroundColorAttributeName:Colors.APP_COLOR])

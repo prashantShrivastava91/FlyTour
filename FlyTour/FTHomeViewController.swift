@@ -119,17 +119,17 @@ class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //MARK: - private methods
    
-    func p_openNewToursView() {
+    @objc private func p_openNewToursView() {
         let newTourVC = FTNewTourViewController()
         newTourVC.delegate = self
         present(newTourVC, animated: true, completion: nil)
     }
     
-    func p_getTours() {
+    private func p_getTours() {
         indicatorView.startAnimating()
+        noInternetView.alpha = 0
         FTNetworkManager.sharedInstance.getObjectWith(urlPath: Constants.BASE_URL.appending(Apis.GET_TOURS), params: nil, success: { [weak self] (response) in
             self?.indicatorView.stopAnimating()
-            self?.noInternetView.alpha = 0
             if let JSON = response {
                 let toursResponse = Mapper<FTToursResponse>().map(JSONObject: JSON)
                 if let toursArray = toursResponse?.tours {
@@ -143,7 +143,7 @@ class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func p_addTableview() {
+    private func p_addTableview() {
         tableview = UITableView()
         tableview.backgroundColor = Colors.GREY_F3EEEF
         tableview.separatorStyle = .none
@@ -154,13 +154,13 @@ class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         view.addSubview(tableview)
     }
     
-    func p_addIndicatorView() {
+    private func p_addIndicatorView() {
         indicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         indicatorView.hidesWhenStopped = true
         tableview.addSubview(indicatorView)
     }
     
-    func p_addNewTourButton() {
+    private func p_addNewTourButton() {
         newTourButton = UIButton(type: .custom)
         newTourButton.backgroundColor = Colors.APP_COLOR
         newTourButton.titleLabel?.font = UIFont(name: Constants.APP_FONT_MEDIUM, size: FTHomeViewController.kButtonFont)
@@ -172,7 +172,7 @@ class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDa
         view.addSubview(newTourButton)
     }
     
-    func p_addNoInternetView() {
+    private func p_addNoInternetView() {
         noInternetView = FTNoInternetView(frame: .zero)
         noInternetView.delegate = self
         noInternetView.alpha = 0
