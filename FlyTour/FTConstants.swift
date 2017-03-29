@@ -9,6 +9,7 @@
 import UIKit
 
 struct Constants {
+    static let BASE_URL: String = "http://192.168.0.5:3010"
     static let MAPS_API_KEY: String = "AIzaSyDN2raPUtFJlo6KRF7O1YcsmPadIBqxNww";
     static let APP_FONT_NAME: String = "HelveticaNeue";
     static let APP_FONT_MEDIUM: String = "HelveticaNeue-Medium"
@@ -24,12 +25,21 @@ struct Icons {
     static let PLUS_ICON: String = String.init("\u{e6d5}")
     static let DESTINATION_ICON = String.init("\u{e708}")
     static let VERTICAL_DOTS_ICON = String.init("\u{e6e5}")
-    static let DOWN_ICON = String.init("\u{e9a0}")
+    static let CROSS_ICON = String.init("\u{e936}")
     static let WAYPOINTS_ICON = String.init("\u{e973}")
 }
 
 struct Colors {
-    static let APP_COLOR: UIColor = UIColor(colorLiteralRed: 66/255.0, green: 133/255.0, blue: 244/255.0, alpha: 1.0)
-    static let RED_F35044: UIColor = UIColor(colorLiteralRed: 243/255.0, green: 80/255.0, blue: 68/255.0, alpha: 1.0)
-    static let GREY_818181: UIColor = UIColor(colorLiteralRed: 129/255.0, green: 129/255.0, blue: 129/255.0, alpha: 1.0)
+    static let APP_COLOR: UIColor = UIColor(red:0.26, green:0.52, blue:0.96, alpha:1.0)
+    static let RED_F35044: UIColor = UIColor(red:0.95, green:0.31, blue:0.27, alpha:1.0)
+    static let GREY_818181: UIColor = UIColor(red:0.51, green:0.51, blue:0.51, alpha:1.0)
+    static let GREY_F3EEEF: UIColor = UIColor(red:0.95, green:0.93, blue:0.94, alpha:1.0)
+    static let GREY_F8F5F6: UIColor = UIColor(red:0.97, green:0.96, blue:0.96, alpha:1.0)
+    static let GREY_E0E0E0: UIColor = UIColor(red:0.88, green:0.88, blue:0.88, alpha:1.0)
+}
+
+
+struct Apis {
+    static let GET_TOURS: String = "/getAllTours"
+    static let SAVE_TOUR: String = "/saveTour"
 }

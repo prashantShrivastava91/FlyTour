@@ -61,21 +61,33 @@ class FTRouteDetailCell: UITableViewCell {
         }
     }
     
-    func updateCellWith(model: FTRouteDetailCellModel) {
-        iconLabel.text = model.icon
-        nameLabel.text = model.name
-        detailLabel.text = model.detail
+    func updateCellWith(place: FTPlace) {
+        var iconText: String?
+        switch place.placeType {
+        case .Source:
+            iconText = Icons.SOURCE_ICON
+            break
+        case .Destination:
+            iconText = Icons.DESTINATION_ICON!
+            break
+        default:
+            iconText = Icons.WAYPOINTS_ICON!
+            break
+        }
+        iconLabel.text = iconText
+        nameLabel.text = place.name
+        detailLabel.text = place.formattedAddress
     }
     
-    static func getCellHeight(model: FTRouteDetailCellModel) -> CGFloat {
+    static func getCellHeight(place: FTPlace) -> CGFloat {
         var height: CGFloat = kCellVerticalPadding
         
         let labelWidth: CGFloat = Constants.SCREEN_WIDTH - 2 * kCellHorizontalPadding - kIconDimension - kIconRightPadding
-        if (model.name != nil) && model.name!.characters.count > 0 {
-            height += model.name!.suggestedSizeWith(font: UIFont(name: Constants.APP_FONT_MEDIUM, size: FTRouteDetailCell.kPrimaryFont)!, size: CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude), lineBreakMode: .byWordWrapping).height + kNameDetailPadding
+        if (place.name != nil) && place.name!.characters.count > 0 {
+            height += place.name!.suggestedSizeWith(font: UIFont(name: Constants.APP_FONT_MEDIUM, size: FTRouteDetailCell.kPrimaryFont)!, size: CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude), lineBreakMode: .byWordWrapping).height + kNameDetailPadding
         }
-        if (model.detail != nil) && model.detail!.characters.count > 0 {
-            height += model.detail!.suggestedSizeWith(font: UIFont(name: Constants.APP_FONT_NAME, size: FTRouteDetailCell.kSecondaryFont)!, size: CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude), lineBreakMode: .byWordWrapping).height
+        if (place.formattedAddress != nil) && place.formattedAddress!.characters.count > 0 {
+            height += place.formattedAddress!.suggestedSizeWith(font: UIFont(name: Constants.APP_FONT_NAME, size: FTRouteDetailCell.kSecondaryFont)!, size: CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude), lineBreakMode: .byWordWrapping).height
         }
         height += kCellVerticalPadding
         return height

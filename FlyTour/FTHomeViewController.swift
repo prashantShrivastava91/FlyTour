@@ -1,42 +1,31 @@
 //
-//  ViewController.swift
+//  FTHomeViewController.swift
 //  FlyTour
 //
-//  Created by Prashant Shrivastava on 3/23/17.
+//  Created by Prashant Shrivastava on 3/28/17.
 //  Copyright © 2017 FlyHomes. All rights reserved.
 //
 
 import UIKit
-import GoogleMaps
-import GooglePlaces
+import Alamofire
+import ObjectMapper
 
-let kDefaultLatitude: Double = 28.52
-let kDefaultLongitude: Double = 77.06
-let kDefaultZoomFactor: Float = 6.0
-let kTextfieldHorizontalPadding: CGFloat = 20.0;
+class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FTNewTourViewControllerDelegate {
 
-let kButtonTitleFont: CGFloat = 14.0
-let kButtonHeight: CGFloat = 40.0;
-let kLineWidth: CGFloat = 1.0;
-
-class FTHomeViewController: UIViewController {
-
-    let kPageTitle: String = "FlyTour";
-    let kNewTourText: String = "NEW TOUR";
-    let kMyToursText: String = "MY TOURS";
+    static let kButtonHeight: CGFloat = 40.0
+    static let kButtonFont: CGFloat = 16.0
+    static let kButtonPadding: CGFloat = 6.0
+    static let kButtonCornerRadius: CGFloat = 4.0
+    static let kCreateTourText: String = "Create a new tour"
+    static let kPageTitle: String = "MY TOURS";
     
-    var mapView: GMSMapView!
-    var myToursButton: UIButton!
+    var tableview: UITableView!
+    var indicatorView: UIActivityIndicatorView!
     var newTourButton: UIButton!
-    var lineView: UIView!
     
-    var sourceTextfield: UITextField!
-    var destinationTextfield: UITextField!
-    var suggestionsTableView: UITableView!
+    var tours = [FTTour]()
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
+    //MARK: - lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,48 +34,115 @@ class FTHomeViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = Colors.APP_COLOR
         navigationController?.navigationBar.tintColor = UIColor.white
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
-        navigationItem.title = kPageTitle
+        navigationItem.title = FTHomeViewController.kPageTitle
         navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
-        
         self.edgesForExtendedLayout = [];
-        view.backgroundColor = UIColor.white;
-        self.p_initSubviews();
+        view.backgroundColor = .white
+        
+        p_addTableview()
+        p_addIndicatorView()
+        p_addNewTourButton()
+        p_getTours()
     }
     
     override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews();
+        super.viewWillLayoutSubviews()
         
-        let viewSize = view.frame.size;
-        mapView.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height - kButtonHeight);
-        myToursButton.frame = CGRect(x: 0, y: viewSize.height - kButtonHeight, width: (viewSize.width - kLineWidth)/2, height: kButtonHeight)
-        lineView.frame = CGRect(x: FTCommonFunctions.rightOfView(view: myToursButton), y: viewSize.height - kButtonHeight, width: kLineWidth, height: kButtonHeight)
-        newTourButton.frame = CGRect(x: FTCommonFunctions.rightOfView(view: lineView), y: viewSize.height - kButtonHeight, width: (viewSize.width - kLineWidth)/2, height: kButtonHeight);
-    }
-
-    func p_startNewTour() {
-        navigationController?.pushViewController(FTNewTourViewController(), animated: true);
+        let viewSize = view.frame.size
+        newTourButton.frame = CGRect(x: FTHomeViewController.kButtonPadding, y: viewSize.height - FTHomeViewController.kButtonPadding - FTHomeViewController.kButtonHeight, width: (viewSize.width - 2 * FTHomeViewController.kButtonPadding), height: FTHomeViewController.kButtonHeight)
+        tableview.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height - 2 * FTHomeViewController.kButtonPadding - FTHomeViewController.kButtonHeight)
+        indicatorView.center = CGPoint(x: tableview.bounds.size.width/2, y: tableview.bounds.size.height/2)
     }
     
-    func p_initSubviews() {
-        mapView = GMSMapView.map(withFrame: CGRect.zero, camera: GMSCameraPosition.camera(withLatitude: kDefaultLatitude, longitude: kDefaultLongitude, zoom: kDefaultZoomFactor));
-        view.addSubview(mapView);
-        
-        myToursButton = UIButton(type: UIButtonType.custom);
-        myToursButton.backgroundColor = Colors.APP_COLOR;
-        myToursButton.setTitle(kMyToursText, for: UIControlState.normal);
-        myToursButton.titleLabel?.font = UIFont(name: Constants.APP_FONT_NAME, size: kButtonTitleFont);
-        view.addSubview(myToursButton);
-        
-        lineView = UIView()
-        lineView.backgroundColor = UIColor.white;
-        view.addSubview(lineView);
-        
-        newTourButton = UIButton(type: UIButtonType.custom);
-        newTourButton.backgroundColor = Colors.APP_COLOR;
-        newTourButton.setTitle(kNewTourText, for: UIControlState.normal);
-        newTourButton.titleLabel?.font = UIFont(name: Constants.APP_FONT_NAME, size: kButtonTitleFont);
-        newTourButton.addTarget(self, action: #selector(p_startNewTour), for: .touchUpInside)
-        view.addSubview(newTourButton);
+    //MARK: - UITableViewDelegate methods
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let tourDetailVC = FTTourDetailViewController()
+        tourDetailVC.tour = tours[indexPath.row]
+        navigationController?.pushViewController(tourDetailVC, animated: true)
     }
-
+    
+    //MARK: - UITableViewDataSource methods
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return FTTourDetailCell.getCellHeight(tour: tours[indexPath.row])
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tours.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableview.dequeueReusableCell(withIdentifier: String(describing: FTTourDetailCell.self), for: indexPath) as! FTTourDetailCell
+        cell.selectionStyle = .none
+        cell.updateWith(tour: tours[indexPath.row])
+        return cell
+    }
+    
+    //MARK: - FTNewTourViewControllerDelegate methods
+    
+    func newTourVCRefreshTours(newToursVC: FTNewTourViewController?) {
+        p_getTours()
+    }
+    
+    //MARK: - private methods
+   
+    func p_openNewToursView() {
+        let newTourVC = FTNewTourViewController()
+        newTourVC.delegate = self
+        present(newTourVC, animated: true, completion: nil)
+    }
+    
+    func p_getTours() {
+        let URL = NSURL(string: Constants.BASE_URL.appending(Apis.GET_TOURS))
+        var mutableUrlRequest = URLRequest(url: URL! as URL)
+        mutableUrlRequest.httpMethod = "GET"
+        mutableUrlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+        
+        indicatorView.startAnimating()
+        Alamofire.request(mutableUrlRequest).responseJSON(completionHandler: { [weak self] (response) in
+            if let JSON = response.result.value {
+                let toursResponse = Mapper<FTToursResponse>().map(JSONObject: JSON)
+                if let toursArray = toursResponse?.tours {
+                    self?.tours = toursArray
+                    self?.tableview.reloadData()
+                }
+            }
+            self?.indicatorView.stopAnimating()
+        })
+    }
+    
+    func p_addTableview() {
+        tableview = UITableView()
+        tableview.backgroundColor = Colors.GREY_F3EEEF
+        tableview.separatorStyle = .none
+        tableview.delegate = self
+        tableview.dataSource = self
+        tableview.tableFooterView = UIView()
+        tableview.register(FTTourDetailCell.self, forCellReuseIdentifier: String(describing: FTTourDetailCell.self))
+        view.addSubview(tableview)
+    }
+    
+    func p_addIndicatorView() {
+        indicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        indicatorView.hidesWhenStopped = true
+        tableview.addSubview(indicatorView)
+    }
+    
+    func p_addNewTourButton() {
+        newTourButton = UIButton(type: .custom)
+        newTourButton.backgroundColor = Colors.APP_COLOR
+        newTourButton.titleLabel?.font = UIFont(name: Constants.APP_FONT_MEDIUM, size: FTHomeViewController.kButtonFont)
+        newTourButton.setTitle(FTHomeViewController.kCreateTourText, for: .normal)
+        newTourButton.setTitleColor(.white, for: .normal)
+        newTourButton.addTarget(self, action: #selector(p_openNewToursView), for: .touchUpInside)
+        newTourButton.layer.cornerRadius = FTHomeViewController.kButtonCornerRadius
+        newTourButton.layer.masksToBounds = true
+        view.addSubview(newTourButton)
+    }
+    
 }

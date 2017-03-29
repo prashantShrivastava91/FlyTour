@@ -10,6 +10,9 @@ import UIKit
 
 class FTCommonFunctions {
 
+    static let kPrimaryFont: CGFloat = 18.0
+    static let kSecondaryFont: CGFloat = 14.0
+    
     static func rightOfView(view: UIView) -> CGFloat {
         return view.frame.origin.x + view.frame.size.width;
     }
@@ -30,15 +33,7 @@ class FTCommonFunctions {
     }
     
     static func getDistanceStringFor(totalDistance: Double) -> String {
-        let distance: Int64 = Int64(totalDistance)
-        let kilometers = distance/1000
-        let meters = (distance/1000) % 1000
-        
-        var distanceString = ""
-        distanceString += (kilometers > 0 ? "\(kilometers) km " : "")
-        distanceString += (meters > 0 ? "\(meters) m" : "")
-        distanceString = distanceString.characters.count == 0 ? "0 m" : distanceString
-        return distanceString
+        return String(format: "%.01f km", totalDistance/1000)
     }
     
     static func getTimeStringFor(totalSeconds: Double) -> String {
@@ -51,6 +46,25 @@ class FTCommonFunctions {
         timeString += (minutes > 0 ? "\(minutes) min" : "")
         timeString = timeString.characters.count == 0 ? "0 min" : timeString
         return timeString
+    }
+    
+    static func getDistanceTimeAttributedTextWith(distance: Double, duration: Double, summary: String?) -> NSAttributedString {
+        let distanceText = "\(FTCommonFunctions.getDistanceStringFor(totalDistance: distance))"
+        let timeText = "(\(FTCommonFunctions.getTimeStringFor(totalSeconds: duration)))"
+        var summaryText = ""
+        var finalText: NSString = "\(distanceText) \(timeText)" as NSString
+        if summary != nil && summary!.characters.count > 0 {
+            summaryText = "\nvia \(summary!)"
+            finalText = finalText.appending(summaryText) as NSString
+        }
+        let attributedText: NSMutableAttributedString = NSMutableAttributedString(string: finalText as String, attributes: [NSFontAttributeName: UIFont(name: Constants.APP_FONT_MEDIUM, size: kPrimaryFont)!])
+        
+        attributedText.addAttribute(NSForegroundColorAttributeName, value: Colors.RED_F35044, range: finalText.range(of: distanceText))
+        attributedText.addAttribute(NSForegroundColorAttributeName, value: Colors.GREY_818181, range: finalText.range(of: timeText))
+        if summaryText.characters.count > 0 {
+            attributedText.addAttributes([NSForegroundColorAttributeName: Colors.GREY_818181, NSFontAttributeName: UIFont(name: Constants.APP_FONT_NAME, size: kSecondaryFont)!], range: finalText.range(of: summaryText))
+        }
+        return attributedText.copy() as! NSAttributedString
     }
     
 }
