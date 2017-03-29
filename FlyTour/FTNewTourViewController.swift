@@ -9,7 +9,6 @@
 import UIKit
 import GoogleMaps
 import GooglePlaces
-import Alamofire
 import ObjectMapper
 
 protocol FTNewTourViewControllerDelegate: class {
@@ -23,8 +22,6 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
     let kPageTitle: String = "Book a New Tour"
     let kAddAddressText: String = "ADD\nWAYPOINTS"
     let kSaveText = "Save"
-    let kDirectionsApiUrl = "https://maps.googleapis.com/maps/api/directions/json?"
-    let kGeocodingApiUrl = "http://maps.googleapis.com/maps/api/geocode/json?"
     let kLocationAlertTitle = "Couldn't access Current location"
     let kLocationAlertMessage = "Allow FlyTour to access your location to set current location as source"
     
@@ -173,15 +170,11 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if mapView != nil, currentLocation == nil, let location = manager.location {
             currentLocation = location.coordinate
-            
-            let urlString: String = "\(kGeocodingApiUrl)latlng=\(currentLocation!.latitude),\(currentLocation!.longitude)&amp;sensor=false"
-            let URL = NSURL(string: urlString)
-            var mutableUrlRequest = URLRequest(url: URL! as URL)
-            mutableUrlRequest.httpMethod = "GET"
-            mutableUrlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+            let params = "latlng=\(currentLocation!.latitude),\(currentLocation!.longitude)&amp;sensor=false"
             activityIndicatorView.startAnimating()
-            Alamofire.request(mutableUrlRequest).responseJSON(completionHandler: { [weak self] (response) in
-                if let JSON = response.result.value {
+            FTNetworkManager.sharedInstance.getObjectWith(urlPath: Constants.GEOCODING_API_URL, params: params, success: { [weak self] (response) in
+                self?.activityIndicatorView.stopAnimating()
+                if let JSON = response {
                     let dictionary = JSON as! NSDictionary
                     let results = dictionary.value(forKey: "results") as! NSArray
                     for result  in results {
@@ -196,6 +189,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
                         break
                     }
                 }
+            }, failure: { [weak self] (error) in
                 self?.activityIndicatorView.stopAnimating()
             })
         }
@@ -466,17 +460,15 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         tourModel.totalDuration = totalDuration
         tourModel.summary = summary
         
-        let URL = NSURL(string: Constants.BASE_URL.appending(Apis.SAVE_TOUR))
-        var mutableUrlRequest = URLRequest(url: URL! as URL)
-        mutableUrlRequest.httpMethod = "POST"
-        mutableUrlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        mutableUrlRequest.httpBody = tourModel.toJSONString()?.data(using:String.Encoding.utf8, allowLossyConversion: true)
-        
-        Alamofire.request(mutableUrlRequest).responseJSON { [weak self] (response) in
+        activityIndicatorView.startAnimating()
+        FTNetworkManager.sharedInstance.postObjectWith(urlPath: Constants.BASE_URL.appending(Apis.SAVE_TOUR), jsonBody: tourModel.toJSONString(), success: { [weak self] (response) in
             if (self?.delegate != nil) {
                 self?.delegate?.newTourVCRefreshTours(newToursVC: self)
             }
+            self?.activityIndicatorView.stopAnimating()
             self?.dismiss(animated: true, completion: nil)
+        }) { [weak self] (error) in
+            self?.activityIndicatorView.stopAnimating()
         }
     }
     
@@ -498,6 +490,10 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
                 }
                 frame.origin.y = finalYOrigin
                 sender.view?.frame = frame
+                
+                var iconFrame = addAddressIcon.frame
+                iconFrame.origin.y = finalYOrigin - kAddAddressIconDimension/2
+                addAddressIcon.frame = iconFrame
                 break
             default:
             break
@@ -627,22 +623,16 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
                 paramsString += "&waypoints=optimize:true|\(waypointsPositionArray.joined(separator: "|"))"
             }
             mapView.animate(with: GMSCameraUpdate.fit(bounds, with: UIEdgeInsets(top: kMapCameraBoundsPadding, left: kMapCameraBoundsPadding, bottom: kMapCameraBoundsPadding + kRouteDetailViewHeight, right: kMapCameraBoundsPadding)))
-            paramsString = paramsString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
             
-            let urlString: String = "\(kDirectionsApiUrl)\(paramsString)"
-            let URL = NSURL(string: urlString)
-            var mutableUrlRequest = URLRequest(url: URL! as URL)
-            mutableUrlRequest.httpMethod = "GET"
-            mutableUrlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
             activityIndicatorView.startAnimating()
-            Alamofire.request(mutableUrlRequest).responseJSON(completionHandler: { [weak self] (response) in
-                if let JSON = response.result.value {
+            FTNetworkManager.sharedInstance.getObjectWith(urlPath: Constants.DIRECTIONS_API_URL, params: paramsString, success: { [weak self] (response) in
+                if let JSON = response {
                     self?.routeResponse = Mapper<FTRoutesResponse>().map(JSONObject: JSON)
                     self?.p_reorderWaypoints()
                     self?.p_updateView()
-                    
-                    print("JSON: \(response.result.value)")
                 }
+                self?.activityIndicatorView.stopAnimating()
+            }, failure: { [weak self] (error) in
                 self?.activityIndicatorView.stopAnimating()
             })
         }

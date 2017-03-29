@@ -28,6 +28,7 @@
 		8FA28D831E87DF42007F1359 /* FTRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA28D821E87DF42007F1359 /* FTRoute.swift */; };
 		8FC6881D1E85AAD5002A8C46 /* FTCommonFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC6881C1E85AAD5002A8C46 /* FTCommonFunctions.swift */; };
 		8FC688241E85C6FA002A8C46 /* FTNewTourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC688231E85C6FA002A8C46 /* FTNewTourViewController.swift */; };
+		8FCB48CF1E8C544D00240FB5 /* FTNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCB48CE1E8C544D00240FB5 /* FTNetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		8FA28D821E87DF42007F1359 /* FTRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTRoute.swift; sourceTree = "<group>"; };
 		8FC6881C1E85AAD5002A8C46 /* FTCommonFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCommonFunctions.swift; sourceTree = "<group>"; };
 		8FC688231E85C6FA002A8C46 /* FTNewTourViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNewTourViewController.swift; sourceTree = "<group>"; };
+		8FCB48CE1E8C544D00240FB5 /* FTNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNetworkManager.swift; sourceTree = "<group>"; };
 		AE8BAAACBB54C03330309D5C /* Pods-FlyTour.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlyTour.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlyTour/Pods-FlyTour.debug.xcconfig"; sourceTree = "<group>"; };
 		EB0FB3BA6D8E306AA0BE682C /* Pods_FlyTour.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlyTour.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -140,6 +142,7 @@
 			children = (
 				8F06C0671E843E4C0023BBAA /* FTConstants.swift */,
 				8FC6881C1E85AAD5002A8C46 /* FTCommonFunctions.swift */,
+				8FCB48CE1E8C544D00240FB5 /* FTNetworkManager.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				8F6BF62B1E842BB800B466DB /* FTAppDelegate.swift in Sources */,
 				8FC6881D1E85AAD5002A8C46 /* FTCommonFunctions.swift in Sources */,
 				8FA28D811E87BC30007F1359 /* String+Additions.swift in Sources */,
+				8FCB48CF1E8C544D00240FB5 /* FTNetworkManager.swift in Sources */,
 				8FA28D7D1E874C40007F1359 /* FTRouteDetailCell.swift in Sources */,
 				8FA28D831E87DF42007F1359 /* FTRoute.swift in Sources */,
 				8F06C0681E843E4C0023BBAA /* FTConstants.swift in Sources */,

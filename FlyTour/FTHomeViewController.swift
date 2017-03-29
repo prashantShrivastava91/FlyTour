@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import ObjectMapper
 
 class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FTNewTourViewControllerDelegate {
@@ -98,22 +97,19 @@ class FTHomeViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func p_getTours() {
-        let URL = NSURL(string: Constants.BASE_URL.appending(Apis.GET_TOURS))
-        var mutableUrlRequest = URLRequest(url: URL! as URL)
-        mutableUrlRequest.httpMethod = "GET"
-        mutableUrlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
-        
         indicatorView.startAnimating()
-        Alamofire.request(mutableUrlRequest).responseJSON(completionHandler: { [weak self] (response) in
-            if let JSON = response.result.value {
+        FTNetworkManager.sharedInstance.getObjectWith(urlPath: Constants.BASE_URL.appending(Apis.GET_TOURS), params: nil, success: { [weak self] (response) in
+            self?.indicatorView.stopAnimating()
+            if let JSON = response {
                 let toursResponse = Mapper<FTToursResponse>().map(JSONObject: JSON)
                 if let toursArray = toursResponse?.tours {
                     self?.tours = toursArray
                     self?.tableview.reloadData()
                 }
             }
+        }) { [weak self] (error) in
             self?.indicatorView.stopAnimating()
-        })
+        }
     }
     
     func p_addTableview() {
