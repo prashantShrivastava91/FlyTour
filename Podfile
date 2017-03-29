@@ -8,6 +8,7 @@ target 'FlyTour' do
     pod 'GooglePlaces'
     pod 'Alamofire', '~> 4.4'
     pod 'ObjectMapper', '~> 2.2'
+    pod 'ReachabilitySwift', '~> 3'
 end
 
 post_install do |installer|

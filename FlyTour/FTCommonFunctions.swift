@@ -12,6 +12,8 @@ class FTCommonFunctions {
 
     static let kPrimaryFont: CGFloat = 18.0
     static let kSecondaryFont: CGFloat = 14.0
+    static let kBannerHeight: CGFloat = 64.0
+    static var overlayPresented: Bool = false
     
     static func rightOfView(view: UIView) -> CGFloat {
         return view.frame.origin.x + view.frame.size.width;
@@ -65,6 +67,36 @@ class FTCommonFunctions {
             attributedText.addAttributes([NSForegroundColorAttributeName: Colors.GREY_818181, NSFontAttributeName: UIFont(name: Constants.APP_FONT_NAME, size: kSecondaryFont)!], range: finalText.range(of: summaryText))
         }
         return attributedText.copy() as! NSAttributedString
+    }
+    
+    @objc static func p_removeBanner(timer: Timer) {
+        overlayPresented = false
+        let userinfo = timer.userInfo as! Dictionary<String, AnyObject>
+        if let bannerView = userinfo["banner"] as? UILabel {
+            UIView.animate(withDuration: 0.5, animations: {
+                bannerView.frame = CGRect(x: 0, y: -kBannerHeight, width: Constants.SCREEN_WIDTH, height: kBannerHeight)
+            }, completion: { (success) in
+                bannerView.removeFromSuperview()
+            })
+        }
+    }
+    
+    static func showOverlayBannerWith(text: String, textColor: UIColor, backgroundColor: UIColor) {
+        if overlayPresented {
+            return
+        }
+        let bannerLabel = UILabel.labelWith(font: UIFont(name: Constants.APP_FONT_MEDIUM, size: kSecondaryFont)!, textColor: textColor, backgroundColor: backgroundColor, multipleLines: false)
+        bannerLabel.text = text
+        bannerLabel.textAlignment = .center
+        bannerLabel.frame = CGRect(x: 0, y: -kBannerHeight, width: Constants.SCREEN_WIDTH, height: kBannerHeight)
+        bannerLabel.alpha = 0
+        UIApplication.shared.keyWindow?.addSubview(bannerLabel)
+        UIView.animate(withDuration: 0.5, animations: { 
+            bannerLabel.alpha = 0.95;
+            bannerLabel.frame = CGRect(x: 0, y: 0, width: Constants.SCREEN_WIDTH, height: kBannerHeight)
+        }) { (success) in
+            Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(p_removeBanner(timer:)), userInfo: ["banner":bannerLabel], repeats: false)
+        }
     }
     
 }
