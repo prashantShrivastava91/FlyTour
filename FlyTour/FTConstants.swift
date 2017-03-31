@@ -11,7 +11,10 @@ import UIKit
 struct Constants {
     static let GEOCODING_API_URL = "http://maps.googleapis.com/maps/api/geocode/json"
     static let DIRECTIONS_API_URL = "https://maps.googleapis.com/maps/api/directions/json"
-    static let BASE_URL: String = "http://192.168.0.5:3011"
+    
+    // DEBUG
+    // Change IP address and server port to start node server
+    static let BASE_URL: String = "http://172.20.10.2:3011"
     static let MAPS_API_KEY: String = "AIzaSyDN2raPUtFJlo6KRF7O1YcsmPadIBqxNww";
     static let APP_FONT_NAME: String = "HelveticaNeue";
     static let APP_FONT_MEDIUM: String = "HelveticaNeue-Medium"

@@ -24,6 +24,8 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
     let kSaveText = "Save"
     let kLocationAlertTitle = "Couldn't access Current location"
     let kLocationAlertMessage = "Allow FlyTour to access your location to set current location as source"
+    let kResetPathText = "YOUR PATH"
+    let kOptimizeText = "OPTIMIZE"
     
     let kPrimaryFont: CGFloat = 18.0
     let kSecondaryFont: CGFloat = 16.0
@@ -36,7 +38,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
     let kIconPadding: CGFloat = 8.0
     let kBorderWidth: CGFloat = 1.0
     let kPolylineStrokeWidth: CGFloat = 4.0
-    let kMapCameraBoundsPadding: CGFloat = 20.0
+    let kMapCameraBoundsPadding: CGFloat = 40.0
     let kAddAddressIconFont: CGFloat = 14.0
     let kAddAddressIconDimension: CGFloat = 42
     let kAddAddressLabelPadding: CGFloat = 6.0
@@ -46,6 +48,10 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
     let kDefaultZoomFactor: Float = 6.0
     let kNavigationViewHeight: CGFloat = 44.0
     let kRightPadding: CGFloat = 10.0
+    let kButtonHeight: CGFloat = 35.0
+    let kButtonPadding: CGFloat = 16.0
+    let kButtonMargin: CGFloat = 10.0
+    let kButtonCornerRadius: CGFloat = 4.0
     
     weak var delegate: FTNewTourViewControllerDelegate?
     var navigationView: UIView!
@@ -65,6 +71,9 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
     var routeDetailLabel: UILabel!
     var routeDetailTableview: UITableView!
     var activityIndicatorView: UIActivityIndicatorView!
+    var optimizeButton: UIButton!
+    var buttonIndicator: UIActivityIndicatorView!
+    
     var routeType: PlaceType = .Source
     var sourcePlaceModel: FTPlace?
     var destinationPlaceModel: FTPlace?
@@ -81,6 +90,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
     var destinationMarker = GMSMarker()
     var currentLocation: CLLocationCoordinate2D?
     var askedLocationPermission = false
+    var isOptimized: Bool = false
     
     //MARK: - lifecycle methods
     
@@ -93,6 +103,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         p_addRouteDetailView()
         p_addIndicatorView()
         p_addAddressIcon()
+        p_addOptimizeButton()
         
         NotificationCenter.default.addObserver(self, selector: #selector(p_checkLocation), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
@@ -143,6 +154,10 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         textSize = FTCommonFunctions.getSizeForattributedText(attributedText: routeDetailLabel.attributedText, boundedSize: CGSize(width: (viewSize.width - kAddAddressLabelPadding - textSize.width - kAddAddressLabelPadding - kAddAddressIconDimension/2), height: CGFloat.greatestFiniteMagnitude))
         routeDetailLabel.frame = CGRect(x: kAddAddressIconDimension/2, y: (kRouteDetailViewHeight - textSize.height)/2, width: textSize.width, height: textSize.height)
         activityIndicatorView.center = view.center
+        
+        textSize = optimizeButton.titleLabel!.text!.suggestedSizeWith(font: optimizeButton.titleLabel!.font, size: CGSize(width: Constants.SCREEN_WIDTH, height: CGFloat.greatestFiniteMagnitude), lineBreakMode: .byTruncatingTail)
+        optimizeButton.frame = CGRect(x: kButtonMargin, y: Constants.SCREEN_HEIGHT - kRouteDetailViewHeight - kButtonMargin - kButtonHeight, width: textSize.width + kButtonPadding, height: kButtonHeight)
+        buttonIndicator.center = CGPoint(x: optimizeButton.bounds.size.width/2, y: optimizeButton.bounds.size.height/2)
     }
     
     //MARK: - UITableViewDataSource methods
@@ -440,6 +455,31 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         p_addSaveLabel()
     }
     
+    func p_addOptimizeButton() {
+        optimizeButton = UIButton(type: .custom)
+        optimizeButton.setTitle(kOptimizeText, for: .normal)
+        optimizeButton.setTitleColor(.white, for: .normal)
+        optimizeButton.addTarget(self, action: #selector(p_toggleOptimize), for: .touchUpInside)
+        optimizeButton.titleLabel?.font = UIFont(name: Constants.APP_FONT_MEDIUM, size: kTertiaryFont)
+        optimizeButton.backgroundColor = Colors.APP_COLOR
+        optimizeButton.alpha = 0
+        optimizeButton.layer.cornerRadius = kButtonCornerRadius
+        optimizeButton.layer.masksToBounds = true
+        view.addSubview(optimizeButton)
+        
+        buttonIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        buttonIndicator.hidesWhenStopped = true
+        optimizeButton.addSubview(buttonIndicator)
+    }
+    
+    func p_toggleOptimize() {
+        isOptimized = !isOptimized
+        optimizeButton.isEnabled = false;
+        buttonIndicator.startAnimating()
+        optimizeButton.setTitle("", for: .normal)
+        p_getPath()
+    }
+    
     @objc private func p_saveTapped() {
         let tourModel = FTTour()
         tourModel.source = sourcePlaceModel
@@ -494,6 +534,10 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
                 var iconFrame = addAddressIcon.frame
                 iconFrame.origin.y = finalYOrigin - kAddAddressIconDimension/2
                 addAddressIcon.frame = iconFrame
+                
+                var buttonFrame = optimizeButton.frame
+                buttonFrame.origin.y = finalYOrigin - kButtonMargin - kButtonHeight
+                optimizeButton.frame = buttonFrame
                 break
             default:
             break
@@ -583,6 +627,14 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         
         saveButton.setTitleColor(.white, for: .normal)
         saveButton.isEnabled = true
+    
+        optimizeButton.isEnabled = true
+        buttonIndicator.stopAnimating()
+        if (isOptimized) {
+            optimizeButton.setTitle(kResetPathText, for: .normal)
+        } else {
+            optimizeButton.setTitle(kOptimizeText, for: .normal)
+        }
     }
     
     private func p_reorderWaypoints() {
@@ -592,12 +644,18 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
             sourceModel.placeType = .Source
             routeDetailArray.append(sourceModel)
             
-            if (routeResponse?.routes != nil && routeResponse!.routes!.count > 0) {
-                if (routeResponse!.routes![0].waypointsOrder != nil) && routeResponse!.routes![0].waypointsOrder!.count > 0 {
-                    let waypointOrder = routeResponse!.routes![0].waypointsOrder!
-                    for i in waypointOrder {
-                        routeDetailArray.append(waypointsArray[waypointOrder[i]])
+            if isOptimized {
+                if (routeResponse?.routes != nil && routeResponse!.routes!.count > 0) {
+                    if (routeResponse!.routes![0].waypointsOrder != nil) && routeResponse!.routes![0].waypointsOrder!.count > 0 {
+                        let waypointOrder = routeResponse!.routes![0].waypointsOrder!
+                        for i in waypointOrder {
+                            routeDetailArray.append(waypointsArray[waypointOrder[i]])
+                        }
                     }
+                }
+            } else {
+                for place in waypointsArray {
+                    routeDetailArray.append(place)
                 }
             }
             
@@ -620,7 +678,11 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
                     waypointsPositionArray.append("\(placeModel.latitude!),\(placeModel.longitude!)")
                     bounds = bounds.includingCoordinate(CLLocationCoordinate2D(latitude: placeModel.latitude!, longitude: placeModel.longitude!))
                 }
-                paramsString += "&waypoints=optimize:true|\(waypointsPositionArray.joined(separator: "|"))"
+                paramsString += "&waypoints="
+                if (isOptimized) {
+                    paramsString += "optimize:true|"
+                }
+                paramsString += "\(waypointsPositionArray.joined(separator: "|"))"
             }
             mapView.animate(with: GMSCameraUpdate.fit(bounds, with: UIEdgeInsets(top: kMapCameraBoundsPadding, left: kMapCameraBoundsPadding, bottom: kMapCameraBoundsPadding + kRouteDetailViewHeight, right: kMapCameraBoundsPadding)))
             
@@ -665,6 +727,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
             destinationMarker = marker
             break
         default:
+            optimizeButton.alpha = 1
             waypointsArray.append(placeModel)
             break
         }

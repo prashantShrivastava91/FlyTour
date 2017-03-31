@@ -11,7 +11,7 @@ import GoogleMaps
 
 class FTTourDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    let kMapCameraBoundsPadding: CGFloat = 20.0
+    let kMapCameraBoundsPadding: CGFloat = 40.0
     let kPolylineStrokeWidth: CGFloat = 4.0
     let kMapviewHeightScale: CGFloat = 0.45
     let kLabelPadding: CGFloat = 20.0
