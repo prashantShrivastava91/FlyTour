@@ -13,6 +13,7 @@ enum PlaceType {
     case Source
     case Destination
     case Waypoint
+    case EditedWaypoint
 }
 
 class FTToursResponse: Mappable {
@@ -73,6 +74,7 @@ class FTPlace: Mappable {
     var name: String?
     var formattedAddress: String?
     var placeId: String?
+    var index: Int = 0
     
     init() {
         

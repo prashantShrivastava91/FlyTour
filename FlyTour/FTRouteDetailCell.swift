@@ -8,10 +8,9 @@
 
 import UIKit
 
-class FTRouteDetailCellModel: NSObject {
-    var icon: String?
-    var name: String?
-    var detail: String?
+protocol FTRouteDetailCellDelegate: class {
+    func routeDetailCellEditTapped(detailCell: FTRouteDetailCell, place:FTPlace)
+    func routeDetailCellDeleteTapped(detailCell: FTRouteDetailCell, place:FTPlace)
 }
 
 class FTRouteDetailCell: UITableViewCell {
@@ -23,12 +22,16 @@ class FTRouteDetailCell: UITableViewCell {
     static let kNameDetailPadding: CGFloat = 6.0
     static let kCellHorizontalPadding: CGFloat = 20.0
     static let kCellVerticalPadding: CGFloat = 10.0
+    static let kEditDeletePadding: CGFloat = 10.0
+    static let kEditDeleteIconDimension: CGFloat = 30.0
     
+    weak var delegate: FTRouteDetailCellDelegate?
     var iconLabel: UILabel!
     var nameLabel: UILabel!
     var detailLabel: UILabel!
-    var lineview: UIView!
-    var distanceTimeLabal: UILabel!
+    var editIcon: UILabel!
+    var deleteIcon: UILabel!
+    var place: FTPlace!
     
     //MARK: - lifecycle methods
     
@@ -47,6 +50,22 @@ class FTRouteDetailCell: UITableViewCell {
         
         detailLabel = UILabel.labelWith(font: UIFont(name: Constants.APP_FONT_NAME, size: FTRouteDetailCell.kSecondaryFont)!, textColor: UIColor.black, backgroundColor: UIColor.clear, multipleLines: true)
         addSubview(detailLabel)
+        
+        editIcon = UILabel.labelWith(font: UIFont(name: Constants.ICON_FONT_NAME, size: FTRouteDetailCell.kIconDimension)!, textColor: .black, backgroundColor: .clear, multipleLines: false)
+        editIcon.textAlignment = .center
+        editIcon.isUserInteractionEnabled = true
+        addSubview(editIcon)
+        
+        let editGesture = UITapGestureRecognizer(target: self, action: #selector(p_editTapped))
+        editIcon.addGestureRecognizer(editGesture)
+        
+        deleteIcon = UILabel.labelWith(font: UIFont(name: Constants.ICON_FONT_NAME, size: FTRouteDetailCell.kIconDimension)!, textColor: .black, backgroundColor: .clear, multipleLines: false)
+        deleteIcon.textAlignment = .center
+        deleteIcon.isUserInteractionEnabled = true
+        addSubview(deleteIcon)
+        
+        let deleteGesture = UITapGestureRecognizer(target: self, action: #selector(p_deleteTapped))
+        deleteIcon.addGestureRecognizer(deleteGesture)
     }
     
     override func layoutSubviews() {
@@ -55,7 +74,19 @@ class FTRouteDetailCell: UITableViewCell {
         let viewSize = self.frame.size
         iconLabel.frame = CGRect(x: FTRouteDetailCell.kCellHorizontalPadding, y: (viewSize.height - FTRouteDetailCell.kIconDimension)/2, width: FTRouteDetailCell.kIconDimension, height: FTRouteDetailCell.kIconDimension)
         
-        let labelWidth: CGFloat = viewSize.width - 2 * FTRouteDetailCell.kCellHorizontalPadding - FTRouteDetailCell.kIconDimension - FTRouteDetailCell.kIconRightPadding
+        var labelWidth: CGFloat = viewSize.width - 2 * FTRouteDetailCell.kCellHorizontalPadding - FTRouteDetailCell.kIconDimension - FTRouteDetailCell.kIconRightPadding
+        if (deleteIcon.text != nil) {
+            deleteIcon.frame = CGRect(x: viewSize.width - FTRouteDetailCell.kCellHorizontalPadding - FTRouteDetailCell.kEditDeleteIconDimension, y: FTRouteDetailCell.kCellVerticalPadding, width: FTRouteDetailCell.kEditDeleteIconDimension, height: FTRouteDetailCell.kEditDeleteIconDimension)
+            labelWidth -= (FTRouteDetailCell.kEditDeleteIconDimension + FTRouteDetailCell.kEditDeletePadding)
+        } else {
+            deleteIcon.frame = .zero
+        }
+        if (editIcon.text != nil) {
+            editIcon.frame = CGRect(x: viewSize.width - FTRouteDetailCell.kCellHorizontalPadding - FTRouteDetailCell.kEditDeleteIconDimension - FTRouteDetailCell.kEditDeletePadding - FTRouteDetailCell.kEditDeleteIconDimension, y: FTRouteDetailCell.kCellVerticalPadding, width: FTRouteDetailCell.kEditDeleteIconDimension, height: FTRouteDetailCell.kEditDeleteIconDimension)
+            labelWidth -= FTRouteDetailCell.kEditDeleteIconDimension
+        } else {
+            editIcon.frame = .zero
+        }
         var labelSize: CGSize = CGSize.zero
         if (nameLabel.text != nil) && nameLabel.text!.characters.count > 0 {
             labelSize = nameLabel.text!.suggestedSizeWith(font: nameLabel.font, size: CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude), lineBreakMode: .byWordWrapping)
@@ -70,6 +101,7 @@ class FTRouteDetailCell: UITableViewCell {
     //MARK: - public methods
     
     func updateCellWith(place: FTPlace) {
+        self.place = place
         var iconText: String?
         switch place.placeType {
         case .Source:
@@ -85,12 +117,30 @@ class FTRouteDetailCell: UITableViewCell {
         iconLabel.text = iconText
         nameLabel.text = place.name
         detailLabel.text = place.formattedAddress
+        
+        switch place.placeType {
+        case .Source:
+            fallthrough
+        case .Destination:
+            editIcon.text = nil
+            deleteIcon.text = nil
+            break
+        case .Waypoint:
+            editIcon.text = Icons.EDIT_ICON
+            deleteIcon.text = Icons.DELETE_ICON
+            break
+        default:
+            break
+        }
     }
     
     static func getCellHeight(place: FTPlace) -> CGFloat {
         var height: CGFloat = kCellVerticalPadding
+        var labelWidth: CGFloat = Constants.SCREEN_WIDTH - 2 * kCellHorizontalPadding - kIconDimension - kIconRightPadding
         
-        let labelWidth: CGFloat = Constants.SCREEN_WIDTH - 2 * kCellHorizontalPadding - kIconDimension - kIconRightPadding
+        if (place.placeType == .Waypoint) {
+            labelWidth -= (FTRouteDetailCell.kEditDeleteIconDimension + FTRouteDetailCell.kEditDeletePadding + FTRouteDetailCell.kEditDeleteIconDimension)
+        }
         if (place.name != nil) && place.name!.characters.count > 0 {
             height += place.name!.suggestedSizeWith(font: UIFont(name: Constants.APP_FONT_MEDIUM, size: FTRouteDetailCell.kPrimaryFont)!, size: CGSize(width: labelWidth, height: CGFloat.greatestFiniteMagnitude), lineBreakMode: .byWordWrapping).height + kNameDetailPadding
         }
@@ -101,4 +151,18 @@ class FTRouteDetailCell: UITableViewCell {
         return height
     }
 
+    //MARK: - private methods
+    
+    func p_editTapped() {
+        if (delegate != nil) {
+            delegate?.routeDetailCellEditTapped(detailCell: self, place: self.place)
+        }
+    }
+    
+    func p_deleteTapped() {
+        if (delegate != nil) {
+            delegate?.routeDetailCellDeleteTapped(detailCell: self, place: self.place)
+        }
+    }
+    
 }

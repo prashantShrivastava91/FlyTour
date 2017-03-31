@@ -33,6 +33,8 @@ struct Icons {
     static let CROSS_ICON = String.init("\u{e936}")
     static let WAYPOINTS_ICON = String.init("\u{e973}")
     static let RELOAD_ICON = String.init("\u{e726}")
+    static let EDIT_ICON = String.init("\u{e6dd}")
+    static let DELETE_ICON = String.init("\u{e685}")
 }
 
 struct Colors {

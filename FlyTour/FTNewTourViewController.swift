@@ -15,7 +15,7 @@ protocol FTNewTourViewControllerDelegate: class {
     func newTourVCRefreshTours(newToursVC: FTNewTourViewController?)
 }
 
-class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, GMSAutocompleteViewControllerDelegate, CLLocationManagerDelegate {
+class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, GMSAutocompleteViewControllerDelegate, CLLocationManagerDelegate, FTRouteDetailCellDelegate {
     
     let kDefaultSourceText: String = "Choose source..."
     let kDefaultDestinationText: String = "Choose destination..."
@@ -91,6 +91,9 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
     var currentLocation: CLLocationCoordinate2D?
     var askedLocationPermission = false
     var isOptimized: Bool = false
+    var editIndex: Int = 0
+    var waypointsOrder = [Int]()
+    var waypointsMarker = [GMSMarker]()
     
     //MARK: - lifecycle methods
     
@@ -176,8 +179,30 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: FTRouteDetailCell.self), for: indexPath) as! FTRouteDetailCell
+        cell.selectionStyle = .none
+        cell.delegate = self
         cell.updateCellWith(place: routeDetailArray[indexPath.row])
         return cell
+    }
+    
+    //MARK: - FTRouteDetailCellDelegate methods
+    
+    func routeDetailCellEditTapped(detailCell: FTRouteDetailCell, place: FTPlace) {
+        routeType = .EditedWaypoint
+        editIndex = place.index
+        
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+        present(autocompleteController, animated: true, completion: nil)
+    }
+    
+    func routeDetailCellDeleteTapped(detailCell: FTRouteDetailCell, place: FTPlace) {
+        waypointsArray.remove(at: place.index)
+        
+        let markerToDelete = waypointsMarker[place.index]
+        markerToDelete.map = nil
+        waypointsMarker.remove(at: place.index)
+        p_getPath()
     }
     
     //MARK: - CLLocationManagerDelegate methods
@@ -647,15 +672,22 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
             if isOptimized {
                 if (routeResponse?.routes != nil && routeResponse!.routes!.count > 0) {
                     if (routeResponse!.routes![0].waypointsOrder != nil) && routeResponse!.routes![0].waypointsOrder!.count > 0 {
-                        let waypointOrder = routeResponse!.routes![0].waypointsOrder!
-                        for i in waypointOrder {
-                            routeDetailArray.append(waypointsArray[waypointOrder[i]])
+                        waypointsOrder = routeResponse!.routes![0].waypointsOrder!
+                        for i in waypointsOrder {
+                            let place = waypointsArray[waypointsOrder[i]]
+                            place.placeType = .Waypoint
+                            place.index = waypointsOrder[i]
+                            routeDetailArray.append(place)
                         }
                     }
                 }
             } else {
+                var index: Int = 0
                 for place in waypointsArray {
+                    place.placeType = .Waypoint
+                    place.index = index
                     routeDetailArray.append(place)
+                    index += 1
                 }
             }
             
@@ -726,9 +758,18 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
             destinationMarker.map = nil
             destinationMarker = marker
             break
-        default:
+        case .Waypoint:
             optimizeButton.alpha = 1
             waypointsArray.append(placeModel)
+            waypointsMarker.append(marker)
+            break
+        case .EditedWaypoint:
+            waypointsArray.remove(at: editIndex)
+            waypointsArray.insert(placeModel, at: editIndex)
+            
+            let markerToDelete = waypointsMarker[editIndex]
+            markerToDelete.map = nil
+            waypointsMarker.remove(at: editIndex)
             break
         }
         p_getPath()
