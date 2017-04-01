@@ -36,7 +36,7 @@ class FTPhotoCell: UICollectionViewCell {
     //MARK: - public methods
     
     func updateWith(imageUrl: String) {
-        imageview.image = UIImage(contentsOfFile: imageUrl)
+        imageview.image = UIImage(contentsOfFile: FTCommonFunctions.getUpdatedPath(urlPath: imageUrl))
     }
     
 }

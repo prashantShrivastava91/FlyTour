@@ -104,4 +104,15 @@ class FTCommonFunctions {
         return "/image_".appending(timestamp)
     }
     
+    static func getUpdatedPath(urlPath: String) -> String {
+        let path = urlPath as NSString
+        let range = path.range(of: "/Documents")
+        if (range.location == NSNotFound) {
+            return ""
+        }
+        let fileName = path.substring(from: (range.location + range.length + 1))
+        let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        return documentDirectory.appending("/" + fileName)
+    }
+    
 }
