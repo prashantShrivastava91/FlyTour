@@ -93,6 +93,7 @@ class FTPlace: Mappable {
         name <- map["name"]
         formattedAddress <- map["formattedAddress"]
         placeId <- map["placeId"]
+        images <- map["images"]
     }
     
 }
