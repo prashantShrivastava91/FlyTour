@@ -25,6 +25,7 @@ class FTLocationPhotosViewController: UIViewController, UIImagePickerControllerD
     let kAssetPadding: CGFloat = 10.0
     
     var place: FTPlace!
+    var fromDetailView: Bool = false
     var imagePicker: UIImagePickerController!
     var photosCollectionView: UICollectionView!
     
@@ -50,13 +51,15 @@ class FTLocationPhotosViewController: UIViewController, UIImagePickerControllerD
         closeBtn.addTarget(self, action: #selector(p_closeView), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: closeBtn)
         
-        let addBtn = UIButton(type: .custom)
-        addBtn.titleLabel?.font = UIFont(name: Constants.ICON_FONT_NAME, size: kIconFont)
-        addBtn.setTitle(Icons.PLUS_ICON, for: .normal)
-        addBtn.setTitleColor(.white, for: .normal)
-        addBtn.frame = CGRect(x: 0, y: 0, width: kIconDimension, height: kIconDimension)
-        addBtn.addTarget(self, action: #selector(p_addImage), for: .touchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addBtn)
+        if (!fromDetailView) {
+            let addBtn = UIButton(type: .custom)
+            addBtn.titleLabel?.font = UIFont(name: Constants.ICON_FONT_NAME, size: kIconFont)
+            addBtn.setTitle(Icons.PLUS_ICON, for: .normal)
+            addBtn.setTitleColor(.white, for: .normal)
+            addBtn.frame = CGRect(x: 0, y: 0, width: kIconDimension, height: kIconDimension)
+            addBtn.addTarget(self, action: #selector(p_addImage), for: .touchUpInside)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addBtn)
+        }
         
         let flowLayout = UICollectionViewFlowLayout()
         let assetDimension = (Constants.SCREEN_WIDTH - 3 * kAssetPadding)/2

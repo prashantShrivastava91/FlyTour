@@ -9,7 +9,7 @@
 import UIKit
 import GoogleMaps
 
-class FTTourDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class FTTourDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, GMSMapViewDelegate {
 
     let kMapCameraBoundsPadding: CGFloat = 40.0
     let kPolylineStrokeWidth: CGFloat = 4.0
@@ -85,13 +85,31 @@ class FTTourDetailViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
     
+    //MARK: - GMSMapViewDelegate methods 
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        var userdata = marker.userData as! Dictionary<String, Any>
+        let place = userdata["place"] as! FTPlace
+        
+        let locationPhotosVC = FTLocationPhotosViewController()
+        locationPhotosVC.place = place
+        locationPhotosVC.fromDetailView = true
+        let navController = UINavigationController(rootViewController: locationPhotosVC)
+        present(navController, animated: true, completion: nil)
+        return true
+    }
+    
     //MARK: - private methods
     
-    private func p_placeMarker(position: CLLocationCoordinate2D, name: String?) {
-        let marker = GMSMarker(position: position)
-        marker.title = name
+    private func p_placeMarker(place: FTPlace) {
+        let marker = GMSMarker(position: CLLocationCoordinate2DMake(place.latitude!, place.longitude!))
+        marker.title = place.name
         marker.appearAnimation = GMSMarkerAnimation.pop
         marker.map = mapview
+        
+        var userdata = Dictionary<String, Any>()
+        userdata["place"] = place
+        marker.userData = userdata
     }
     
     private func p_populateData() {
@@ -104,7 +122,7 @@ class FTTourDetailViewController: UIViewController, UITableViewDataSource, UITab
             if let latitude = source.latitude, let longitude = source.longitude {
                 let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 bounds = bounds.includingCoordinate(location)
-                p_placeMarker(position: location, name: tour.source?.name)
+                p_placeMarker(place: source)
             }
         }
         if let waypoints = tour.waypoints {
@@ -114,7 +132,7 @@ class FTTourDetailViewController: UIViewController, UITableViewDataSource, UITab
                 if let latitude = waypoint.latitude, let longitude = waypoint.longitude {
                     let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                     bounds = bounds.includingCoordinate(location)
-                    p_placeMarker(position: location, name: waypoint.name)
+                    p_placeMarker(place: waypoint)
                 }
             }
         }
@@ -124,7 +142,7 @@ class FTTourDetailViewController: UIViewController, UITableViewDataSource, UITab
             if let latitude = destination.latitude, let longitude = destination.longitude {
                 let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 bounds = bounds.includingCoordinate(location)
-                p_placeMarker(position: location, name: tour.destination?.name)
+                p_placeMarker(place: destination)
             }
         }
         if let encodedPath = tour.polyline {
@@ -141,6 +159,7 @@ class FTTourDetailViewController: UIViewController, UITableViewDataSource, UITab
     
     private func p_addMapview() {
         mapview = GMSMapView(frame: .zero)
+        mapview.delegate = self
         view.addSubview(mapview)
     }
 
