@@ -75,6 +75,7 @@ class FTPlace: Mappable {
     var formattedAddress: String?
     var placeId: String?
     var index: Int = 0
+    var images = [String]()
     
     init() {
         

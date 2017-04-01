@@ -99,4 +99,9 @@ class FTCommonFunctions {
         }
     }
     
+    static func getUniquePath() -> String {
+        let timestamp = String(format: "%f.jpg", NSDate().timeIntervalSince1970 * 1000)
+        return "/image_".appending(timestamp)
+    }
+    
 }

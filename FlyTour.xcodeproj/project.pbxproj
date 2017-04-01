@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		8613DB0169394C65DD8B64A1 /* Pods_FlyTour.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0FB3BA6D8E306AA0BE682C /* Pods_FlyTour.framework */; };
 		8F06C0681E843E4C0023BBAA /* FTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F06C0671E843E4C0023BBAA /* FTConstants.swift */; };
+		8F2FC16B1E8EF0CB00A3329A /* FTLocationPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2FC16A1E8EF0CB00A3329A /* FTLocationPhotosViewController.swift */; };
+		8F2FC16D1E8F5EA400A3329A /* FTPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2FC16C1E8F5EA400A3329A /* FTPhotoCell.swift */; };
+		8F2FC16F1E8F6C2F00A3329A /* FTPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2FC16E1E8F6C2F00A3329A /* FTPhotoViewController.swift */; };
 		8F5292011E89D64900F130BC /* NSMutableDictionary+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5292001E89D64900F130BC /* NSMutableDictionary+Additions.swift */; };
 		8F55028B1E85D86E00E84C62 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F55028A1E85D86E00E84C62 /* icomoon.ttf */; };
 		8F6BF62B1E842BB800B466DB /* FTAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6BF62A1E842BB800B466DB /* FTAppDelegate.swift */; };
@@ -35,6 +38,9 @@
 /* Begin PBXFileReference section */
 		4A00F1E9D70073E802BF3E82 /* Pods-FlyTour.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlyTour.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlyTour/Pods-FlyTour.release.xcconfig"; sourceTree = "<group>"; };
 		8F06C0671E843E4C0023BBAA /* FTConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTConstants.swift; sourceTree = "<group>"; };
+		8F2FC16A1E8EF0CB00A3329A /* FTLocationPhotosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTLocationPhotosViewController.swift; sourceTree = "<group>"; };
+		8F2FC16C1E8F5EA400A3329A /* FTPhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPhotoCell.swift; sourceTree = "<group>"; };
+		8F2FC16E1E8F6C2F00A3329A /* FTPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPhotoViewController.swift; sourceTree = "<group>"; };
 		8F5292001E89D64900F130BC /* NSMutableDictionary+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableDictionary+Additions.swift"; sourceTree = "<group>"; };
 		8F55028A1E85D86E00E84C62 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = icomoon.ttf; sourceTree = "<group>"; };
 		8F6BF6271E842BB800B466DB /* FlyTour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlyTour.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,6 +142,8 @@
 				8FC688231E85C6FA002A8C46 /* FTNewTourViewController.swift */,
 				8F8077051E8ACB7600AF1D2A /* FTHomeViewController.swift */,
 				8F8077071E8BCF1600AF1D2A /* FTTourDetailViewController.swift */,
+				8F2FC16A1E8EF0CB00A3329A /* FTLocationPhotosViewController.swift */,
+				8F2FC16E1E8F6C2F00A3329A /* FTPhotoViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -165,6 +173,7 @@
 			children = (
 				8FA28D7C1E874C40007F1359 /* FTRouteDetailCell.swift */,
 				8F8077011E8A8F5500AF1D2A /* FTTourDetailCell.swift */,
+				8F2FC16C1E8F5EA400A3329A /* FTPhotoCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -325,10 +334,12 @@
 				8F5292011E89D64900F130BC /* NSMutableDictionary+Additions.swift in Sources */,
 				8F8077081E8BCF1600AF1D2A /* FTTourDetailViewController.swift in Sources */,
 				8FA28D751E869B25007F1359 /* FTRoutesResponse.swift in Sources */,
+				8F2FC16D1E8F5EA400A3329A /* FTPhotoCell.swift in Sources */,
 				8FA28D7F1E87B42D007F1359 /* UILabel+Additions.swift in Sources */,
 				8FC688241E85C6FA002A8C46 /* FTNewTourViewController.swift in Sources */,
 				8FA28D7B1E86B47A007F1359 /* FTGenericTextValueData.swift in Sources */,
 				8FA28D771E86B204007F1359 /* FTGeocodedWaypoint.swift in Sources */,
+				8F2FC16B1E8EF0CB00A3329A /* FTLocationPhotosViewController.swift in Sources */,
 				8F8077041E8A926700AF1D2A /* FTToursResponse.swift in Sources */,
 				8FCB48D11E8C690B00240FB5 /* FTNoInternetView.swift in Sources */,
 				8F6BF62B1E842BB800B466DB /* FTAppDelegate.swift in Sources */,
@@ -336,6 +347,7 @@
 				8FA28D811E87BC30007F1359 /* String+Additions.swift in Sources */,
 				8FCB48CF1E8C544D00240FB5 /* FTNetworkManager.swift in Sources */,
 				8FA28D7D1E874C40007F1359 /* FTRouteDetailCell.swift in Sources */,
+				8F2FC16F1E8F6C2F00A3329A /* FTPhotoViewController.swift in Sources */,
 				8FA28D831E87DF42007F1359 /* FTRoute.swift in Sources */,
 				8F06C0681E843E4C0023BBAA /* FTConstants.swift in Sources */,
 			);

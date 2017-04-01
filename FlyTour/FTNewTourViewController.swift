@@ -15,7 +15,7 @@ protocol FTNewTourViewControllerDelegate: class {
     func newTourVCRefreshTours(newToursVC: FTNewTourViewController?)
 }
 
-class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, GMSAutocompleteViewControllerDelegate, CLLocationManagerDelegate, FTRouteDetailCellDelegate {
+class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, GMSAutocompleteViewControllerDelegate, CLLocationManagerDelegate, FTRouteDetailCellDelegate, GMSMapViewDelegate {
     
     let kDefaultSourceText: String = "Choose source..."
     let kDefaultDestinationText: String = "Choose destination..."
@@ -269,6 +269,19 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         return false
     }
     
+    //MARK: - GMSMapViewDelegate methods
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        var userdata = marker.userData as! Dictionary<String, Any>
+        let place = userdata["place"] as! FTPlace
+        
+        let locationPhotosVC = FTLocationPhotosViewController()
+        locationPhotosVC.place = place
+        let navController = UINavigationController(rootViewController: locationPhotosVC)
+        present(navController, animated: true, completion: nil)
+        return true
+    }
+    
     //MARK: - private methods
     
     private func p_showLocationAlert() {
@@ -373,6 +386,7 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
     
     private func p_addMapview() {
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: GMSCameraPosition.camera(withLatitude: kDefaultLatitude, longitude: kDefaultLongitude, zoom: kDefaultZoomFactor));
+        mapView.delegate = self
         view.addSubview(mapView);
     }
     
@@ -738,6 +752,10 @@ class FTNewTourViewController: UIViewController, UITableViewDataSource, UITableV
         marker.title = placeModel.name
         marker.appearAnimation = GMSMarkerAnimation.pop
         marker.map = mapView
+        
+        var userdata = Dictionary<String, Any>()
+        userdata["place"] = placeModel
+        marker.userData = userdata
         
         switch routeType {
         case .Source:

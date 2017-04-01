@@ -58,5 +58,9 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSCameraUsageDescription</key>
+	<string>Please allow Flytour to access your camera to take photos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Please allow Flytour to access your gallery to choose photos.</string>
 </dict>
 </plist>
